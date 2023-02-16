@@ -1,0 +1,20 @@
+#page-body {
+  display: grid;
+  grid-template-rows: 0vh 97vh 3vh; 
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+
+header {
+  grid-area: header;
+}
+
+#page-main-content {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}

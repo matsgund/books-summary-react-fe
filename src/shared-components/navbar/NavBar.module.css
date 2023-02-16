@@ -1,0 +1,24 @@
+.nav-component {
+    background-color: var(--primary-background-color);
+}
+
+ .nav-component nav {
+    display: flex;
+    justify-content: flex-end;
+} 
+
+.nav-component ul {
+    margin: 0px;
+    display: flex;
+}
+
+.nav-component li {
+    padding: 1.5em;
+}
+
+.nav-component a {
+    font-size: var(--primary-link-size);
+    color: var(--primary-link-color);
+}
+
+

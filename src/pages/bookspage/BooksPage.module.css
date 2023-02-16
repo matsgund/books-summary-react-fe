@@ -1,0 +1,130 @@
+.books-grid-container {
+    display: grid;
+    padding-top: 8rem;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-areas:
+      "left-side" 
+     " books-filter-container"
+      "main"
+  }
+
+  .books-main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 1.2rem;
+    padding-bottom: 2rem; 
+  }
+
+  .books-main a {
+    display: grid;
+    align-items: stretch;
+  }
+
+  .books-aside-left {
+    grid-area: left-side;
+  }
+  
+  .books-aside-left ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+  }
+  
+  .books-aside-left li {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .books-aside-left label, input {
+    font-size: var(--primary-text-size);
+    cursor: pointer;
+  }
+  
+  .books-aside-left input {
+   height: 24px;
+   width: 24px;
+   margin-right: 8px;
+  }
+  
+  .books-aside-right {
+    grid-area: right-side;
+  }
+
+.books-hero-container{
+  display: none;
+}  
+
+.books-filter-container {
+  grid-area: books-filter-container;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr;
+  gap: 16px;
+  padding: 8px 0 16px;
+  min-height: 62px;
+} 
+
+.books-filter-elements-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+@media screen and (min-width: 1200px) {
+  .books-grid-container {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:
+    ".  hero hero hero  ."
+      ". books-filter-container books-filter-container books-filter-container ."
+      " left-side main main main right-side"    
+  }
+
+  .books-hero-container {
+    grid-area: hero;
+    background-image: var(--primary-books-hero-background-image);
+    background-position: center;
+    background-size: cover;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 290px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    transition: 0.3s;
+}
+
+.books-hero {
+  text-align: center;
+}
+
+.books-hero  p {
+  color: var(--primary-background-color);
+}
+
+.books-hero  h1 {
+  color: var(--primary-background-color);
+}
+
+  .books-aside-left {
+    justify-self: center;
+  }
+}
+
+@media screen and (min-width: 2500px) {
+  .books-grid-container {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+    ".  . hero hero  . ."
+      ". . books-filter-container books-filter-container . ."
+      ". left-side main main right-side ."    
+  }
+}
+
+  
+
+
