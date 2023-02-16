@@ -9,9 +9,7 @@ import SearchBooks from './components/searchbooks/searchBooks';
 import Categories from './components/categories/categories';
 
 
-// GOAL! 
 
-// 1. create a context that handles the state of queryItems array, the querySearch string and the queryItems state
 interface ChangeQueryItemsProps {
     target: {
       value: string;
@@ -29,8 +27,23 @@ interface ChangeQueryItemsProps {
 
 }
 
+
+// interface changeQueryItemsContextProps {
+//     changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//     refArray: React.MutableRefObject<HTMLInputElement[]>;
+
+// }
+
+ interface children {
+     children: React.ReactNode;
+ }
   
- export const changeQueryItemsContext = createContext<changeQueryItemsContextProps | null>(null);
+export const changeQueryItemsContext = createContext<changeQueryItemsContextProps | null>(null);
+
+export function useChangeQueryItemsContext() {
+   return useContext(changeQueryItemsContext);
+}
+
 
 
 const BooksPage = () => {
@@ -40,6 +53,8 @@ const BooksPage = () => {
     const [queryFilter, setQueryFilter] = useState("");
     const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
     const {books, booksError} = useBooks({queryItems, querySearch});
+
+
 
     const changeQueryItems = (e : ChangeQueryItemsProps) : void => {
         const {value, checked} = e.target;
@@ -58,7 +73,6 @@ const BooksPage = () => {
             })
             // checkbox is set to false when removed from queryItems array
             if (refArray.current) {
-                console.log(refArray);
                 const item = refArray.current.find((element) => element.id === value);
                 if (item) {
                     item.checked = false;

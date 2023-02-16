@@ -29,8 +29,6 @@ const Categories = () => {
     const { changeQueryItems, refArray } = useContext(changeQueryItemsContext) as changeQueryItemsContextProps;
     const {categories, categoryError} = useCategories();
    
-
-
     return (
         <>
             <h3>Categories</h3>
