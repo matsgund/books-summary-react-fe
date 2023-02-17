@@ -1,9 +1,14 @@
+import React, { useContext } from "react";
 import classes from "./searchBooks.module.css";
 import { BsSearch } from "react-icons/bs";
 import { SearchBooksProps } from "./searchBooksInterface";
+import { SearchContext } from '../../BooksPage';
 
-const SearchBooks = ({queryFilter, setQueryFilter, setQuerySearch} : SearchBooksProps) => {
 
+const SearchBooks = () => {
+
+    const { queryFilter, setQueryFilter, setQuerySearch} = useContext(SearchContext) as SearchBooksProps;
+   
      // function that handles the submit of the search form
      const handleSubmit = (e : React.SyntheticEvent) => {
         e.preventDefault();

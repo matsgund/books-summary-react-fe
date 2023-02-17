@@ -1,32 +1,14 @@
-import React, { useState, useRef, useContext } from 'react';
+import { useContext } from 'react';
 import CategoryItem from '../category-item/CategoryItem';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import useCategories from '../../hooks/useCategories';
-import { changeQueryItemsContext } from '../../BooksPage';
-
-
-interface ChangeQueryItemsProps {
-    target: {
-        value: string;
-        checked: boolean;
-    },
-}
-
-interface QueryItems {
-    items: string[];
-}
-
-interface changeQueryItemsContextProps {
-    changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void | null;
-    refArray: React.MutableRefObject<HTMLInputElement[]>;
-
-}
-
+import { CategoryContext } from '../../BooksPage';
+import {CategoryContextProps } from './categoriesInterface';
 
 
 const Categories = () => {
 
-    const { changeQueryItems, refArray } = useContext(changeQueryItemsContext) as changeQueryItemsContextProps;
+    const { changeQueryItems, refArray } = useContext(CategoryContext) as CategoryContextProps;
     const {categories, categoryError} = useCategories();
    
     return (
