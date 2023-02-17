@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import useBooks from './hooks/useBooks';
 import SearchBooks from './components/searchbooks/searchBooks';
 import Categories from './components/categories/categories';
+import useChangeQueryItems from './hooks/useChangeQueryItems';
 
 
 interface ChangeQueryItemsProps {
@@ -31,6 +32,7 @@ interface ChangeQueryItemsProps {
  }
   
 export const changeQueryItemsContext = createContext<changeQueryItemsContextProps | null>(null);
+//export const useChangeQueryItems = () => useContext(changeQueryItemsContext);
 
 
 
@@ -41,33 +43,10 @@ const BooksPage = () => {
     const [queryFilter, setQueryFilter] = useState("");
     const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
     const {books, booksError} = useBooks({queryItems, querySearch});
+    const {changeQueryItems} = useChangeQueryItems({queryItems, setQueryItems, refArray});
   
 
-    const changeQueryItems = (e : React.ChangeEvent<HTMLInputElement>) => {
-        const {value, checked} = e.target;
-        const {items} = queryItems;
-        
-        // add queryElement
-        if(checked) {
-            setQueryItems({
-                items: [...items, value],
-            })
-        } 
-        // remove queryElement
-        else {
-            setQueryItems({
-                items: items.filter((e) => e !==value),               
-            })
-            // checkbox is set to false when removed from queryItems array
-            if (refArray.current) {
-                const item = refArray.current.find((element) => element.id === value);
-                if (item) {
-                    item.checked = false;
-                }
-            } 
-        } 
-    }
-
+    // move to separate file
     // function that empties the queryItems array and sets search querySearch to empty string.
     const clearQueryItems = () => {
         setQueryItems({

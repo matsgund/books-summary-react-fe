@@ -1,20 +1,8 @@
 import { useState, useEffect } from 'react';
 import client from '@/utils/sanityClient';
+import { QueryItemsProps, BooksResult } from './hooksInterfaces';
 import Book from '@/interfaces/bookInterface';
 
-
-interface BooksResult {
-    books: Book[];
-    booksError: string;
-}
-
-interface QueryItemsProps {
-    queryItems: {
-        items: string[];
-    },
-    querySearch: string;
-}
- 
 const useBooks = ({queryItems, querySearch} : QueryItemsProps) : BooksResult => {
 
     const [books, setBooks] = useState<Book[]>([]);
