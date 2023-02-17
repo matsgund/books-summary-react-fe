@@ -1,14 +1,15 @@
 import classes from "./searchBooks.module.css";
 import { BsSearch } from "react-icons/bs";
+import { SearchBooksProps } from "./searchBooksInterface";
 
+const SearchBooks = ({queryFilter, setQueryFilter, setQuerySearch} : SearchBooksProps) => {
 
-interface SearchBooksProps {
-    queryFilter: string;
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    setQueryFilter: (value: string) => void;
-}
-
-const SearchBooks = ({queryFilter,handleSubmit, setQueryFilter} : SearchBooksProps) => {
+     // function that handles the submit of the search form
+     const handleSubmit = (e : React.SyntheticEvent) => {
+        e.preventDefault();
+        const searchInput = (e.target as HTMLFormElement).elements.namedItem("search") as HTMLInputElement;
+        setQuerySearch(searchInput.value);
+    }
 
 return (
     <form onSubmit={handleSubmit}>

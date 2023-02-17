@@ -1,18 +1,4 @@
-import React from "react";
-
-interface CategoryItemProps {
-    item: {
-        title: string;
-        slug: {
-            current: string;
-        };
-        bookCount: number;
-    };
-    changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    i: number;
-    refArray: React.MutableRefObject<HTMLInputElement[]>;
-}
-
+import { CategoryItemProps } from "./CategoryItemInterfaces";
 
 const CategoryItem = ({item, changeQueryItems, i, refArray} : CategoryItemProps) => {
 
@@ -26,7 +12,7 @@ const CategoryItem = ({item, changeQueryItems, i, refArray} : CategoryItemProps)
             value={item.slug.current}
             onChange={changeQueryItems}
             ref={ref => {
-                refArray.current[i] = ref;
+                refArray.current[i] = ref as HTMLInputElement;
             }}
             /> 
         </li>

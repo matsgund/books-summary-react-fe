@@ -9,7 +9,6 @@ import SearchBooks from './components/searchbooks/searchBooks';
 import Categories from './components/categories/categories';
 
 
-
 interface ChangeQueryItemsProps {
     target: {
       value: string;
@@ -27,22 +26,11 @@ interface ChangeQueryItemsProps {
 
 }
 
-
-// interface changeQueryItemsContextProps {
-//     changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//     refArray: React.MutableRefObject<HTMLInputElement[]>;
-
-// }
-
  interface children {
      children: React.ReactNode;
  }
   
 export const changeQueryItemsContext = createContext<changeQueryItemsContextProps | null>(null);
-
-export function useChangeQueryItemsContext() {
-   return useContext(changeQueryItemsContext);
-}
 
 
 
@@ -53,10 +41,9 @@ const BooksPage = () => {
     const [queryFilter, setQueryFilter] = useState("");
     const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
     const {books, booksError} = useBooks({queryItems, querySearch});
+  
 
-
-
-    const changeQueryItems = (e : ChangeQueryItemsProps) : void => {
+    const changeQueryItems = (e : React.ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = e.target;
         const {items} = queryItems;
         
@@ -77,10 +64,9 @@ const BooksPage = () => {
                 if (item) {
                     item.checked = false;
                 }
-            }
+            } 
         } 
     }
-
 
     // function that empties the queryItems array and sets search querySearch to empty string.
     const clearQueryItems = () => {
@@ -95,15 +81,6 @@ const BooksPage = () => {
 
     }
 
-    // function that handles the submit of the search form
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setQuerySearch(e.target.elements.search.value);
-    }
-
-
-
-    
     return (
         <div className={classes["books-grid-container"]}>
             <div className={classes["books-aside-left"]}>
@@ -122,8 +99,8 @@ const BooksPage = () => {
                  {/* the SearchBooks component */}
                 <SearchBooks
                     queryFilter={queryFilter}
-                    handleSubmit={handleSubmit}
                     setQueryFilter={setQueryFilter}
+                    setQuerySearch={setQuerySearch}
                 />
                 {/* if queryItems is not empty, map over queryItems and return a FilterItem component for each item. */}
                 <div className={classes["books-filter-elements-container"]}>
