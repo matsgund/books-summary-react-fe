@@ -1,4 +1,4 @@
-import {useState, useRef, createContext, useContext} from 'react';
+import {useState, useRef, createContext} from 'react';
 import classes from './BooksPage.module.css';
 import BookCard from '@/shared-components/book-card/BookCard';
 import FilterItem from './components/filter-item/FilterItem';
@@ -8,14 +8,8 @@ import useBooks from './hooks/useBooks';
 import SearchBooks from './components/searchbooks/searchBooks';
 import Categories from './components/categories/categories';
 import useChangeQueryItems from './hooks/useChangeQueryItems';
+import useClearQueryItems from './hooks/useClearQueryItems';
 
-
-interface ChangeQueryItemsProps {
-    target: {
-      value: string;
-      checked: boolean;
-    },
-  }
 
   interface QueryItems {
     items: string[];
@@ -24,13 +18,8 @@ interface ChangeQueryItemsProps {
   interface changeQueryItemsContextProps {
     changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
     refArray: React.MutableRefObject<HTMLInputElement[]>;
-
 }
 
- interface children {
-     children: React.ReactNode;
- }
-  
 export const changeQueryItemsContext = createContext<changeQueryItemsContextProps | null>(null);
 //export const useChangeQueryItems = () => useContext(changeQueryItemsContext);
 
@@ -39,27 +28,13 @@ export const changeQueryItemsContext = createContext<changeQueryItemsContextProp
 const BooksPage = () => {
 
     const refArray = useRef<HTMLInputElement[]>([]);
-    const [querySearch, setQuerySearch] = useState("");
-    const [queryFilter, setQueryFilter] = useState("");
+    const [querySearch, setQuerySearch] = useState<string>("");
+    const [queryFilter, setQueryFilter] = useState<string>("");
     const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
     const {books, booksError} = useBooks({queryItems, querySearch});
     const {changeQueryItems} = useChangeQueryItems({queryItems, setQueryItems, refArray});
+    const {clearQueryItems} = useClearQueryItems({setQueryItems, refArray});
   
-
-    // move to separate file
-    // function that empties the queryItems array and sets search querySearch to empty string.
-    const clearQueryItems = () => {
-        setQueryItems({
-            items: [],
-        })
-        
-        // set all checkboxes to false
-        refArray.current.forEach(element => {
-            element.checked = false;
-        });
-
-    }
-
     return (
         <div className={classes["books-grid-container"]}>
             <div className={classes["books-aside-left"]}>
