@@ -1,42 +1,18 @@
 import {useState, useRef, createContext} from 'react';
 import classes from './BooksPage.module.css';
-import BookCard from '@/shared-components/book-card/BookCard';
-import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
-import { Link } from 'react-router-dom';
-import useBooks from './hooks/useBooks';
 import SearchBooks from './components/searchbooks/searchBooks';
 import Categories from './components/categories/categories';
 import useChangeQueryItems from './hooks/useChangeQueryItems';
 import useClearQueryItems from './hooks/useClearQueryItems';
 import  Filters from './components/filters/Filters';
+import Books from './components/books/Books';
+import { QueryItems,CategoryContextProps,  SearchContextProps, FilterContextProps, BooksContextProps  } from './BooksPageInterface';
 
 
-interface QueryItems {
-    items: string[];
-}
-
-interface changeQueryItemsContextProps {
-    changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    refArray: React.MutableRefObject<HTMLInputElement[]>;
-}
-
-interface changeQuerySearchContextProps {
-    setQuerySearch: React.Dispatch<React.SetStateAction<string>>;
-    setQueryFilter: React.Dispatch<React.SetStateAction<string>>;
-    queryFilter: string;
-}
-
-interface filterContextProps {
-    queryItems: {
-        items: string[];
-    },
-    changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    clearQueryItems: () => void;
-}
-
-export const CategoryContext = createContext<changeQueryItemsContextProps | null>(null);
-export const SearchContext = createContext<changeQuerySearchContextProps | null>(null);
-export const FiltersContext = createContext<filterContextProps | null>(null);
+export const CategoryContext = createContext<CategoryContextProps | null>(null);
+export const SearchContext = createContext<SearchContextProps | null>(null);
+export const FiltersContext = createContext<FilterContextProps | null>(null);
+export const BooksContext = createContext<BooksContextProps | null>(null);
 
 
 const BooksPage = () => {
@@ -45,7 +21,6 @@ const BooksPage = () => {
     const [querySearch, setQuerySearch] = useState<string>("");
     const [queryFilter, setQueryFilter] = useState<string>("");
     const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
-    const {books, booksError} = useBooks({queryItems, querySearch});
     const {changeQueryItems} = useChangeQueryItems({queryItems, setQueryItems, refArray});
     const {clearQueryItems} = useClearQueryItems({setQueryItems, refArray});
   
@@ -73,19 +48,9 @@ const BooksPage = () => {
                 </div>
             </div>
             <div className={classes["books-main"]}>
-                {/*  make as a new component that uses useContext */  }
-                {!booksError ?
-                    books.map((item, i)=> (
-                        <Link to={"/books/" + item.slug.current} key={i}>
-                            <BookCard 
-                                key={i} 
-                                book={item}
-                                displayMetadata={true}
-                                />
-                        </Link>
-                    )) :
-                    <ErrorDisplayer error={booksError} />
-                }
+                <BooksContext.Provider value={{queryItems, querySearch}}>
+                    <Books/>
+                </BooksContext.Provider>
             </div>
             <div className={classes["books-aside-right"]}></div>
         </div> 
