@@ -4,34 +4,57 @@ import { QueryItemsProps, BooksResult } from './hooksInterfaces';
 import Book from '@/interfaces/bookInterface';
 
 
-
-const useBooks = ({queryItems, querySearch} : QueryItemsProps) : BooksResult => {
-
+// make a synchronous call to sanity to fetch books
+const useBooks  = ({queryItems, querySearch, latestBookId} : QueryItemsProps) : BooksResult  =>  {
+ 
     const [books, setBooks] = useState<Book[]>([]);
     const [error, setError] = useState<string>("");
+    const bookLimit : number  = 10;
 
-    // query for books. Filter on queryItems. Return all books if queryItems is empty.
-    const booksQuery : string = `*[_type == "book" 
-    && (${querySearch.length > 0 ? `title match "${querySearch}" || author->name match "${querySearch}"` : `true`} )
-    && (${queryItems.items.length > 0 ? `category->slug.current in [${queryItems.items.map(item => `'${item}'`)}]` : `true`}) ]
-    {
-        title,
-        slug,
-        author->{name},
-        category->{title,slug},  
-        mainImage{
-            asset->{
-            _id,
-            url
+    let booksQueryConstructor = (reset: boolean) : string => {
+        
+        let useLatestBook : boolean = false;
+        if(!reset) {
+            useLatestBook = true;
         }
-        }
-    }`;
+        
+        const booksQuery : string = `*[_type == "book" 
+        && (${querySearch.length > 0 ? `title match "${querySearch}" || author->name match "${querySearch}"` : `true`} )
+        && (${queryItems.items.length > 0 ? `category->slug.current in [${queryItems.items.map(item => `'${item}'`)}]` : `true`})
+        && (${latestBookId.length > 0 && useLatestBook ? `_id > "${latestBookId}"` : `true`})
+        ]
+    
+        | order(_id) [0...${bookLimit}]
+    
+            {
+                _id,
+                title,
+                slug,
+                author->{name},
+                category->{title,slug},  
+                mainImage{
+                    asset->{
+                    _id,
+                    url
+                    }
+                }
+            }`;
 
+            return booksQuery;
+
+    }
+  
     // fetch books
-    const fetchBooks = async () => {
+    const fetchBooks = async (resetBooks: boolean) => {
         try {
-            const booksResult : Book[] = await client.fetch(booksQuery);
-            setBooks(booksResult);
+            const query = booksQueryConstructor(resetBooks);
+            const booksResult : Book[] = await client.fetch(query);
+            if(resetBooks) {
+                setBooks(booksResult);
+            } else {
+                // set a time out to simulate a loading state
+                setBooks([...books, ...booksResult]);
+            }
         } catch(e) {
             setError("Something went wrong while fetching books");
         }
@@ -39,8 +62,13 @@ const useBooks = ({queryItems, querySearch} : QueryItemsProps) : BooksResult => 
 
     // fetch books and categories on page load and when queryItems changes
     useEffect(() => {
-        fetchBooks();
+        fetchBooks(true);
     }, [queryItems, querySearch]);
+
+     // fetch books and categories on page load and when latestBookId changes
+     useEffect(() => {
+        fetchBooks(false);
+    }, [latestBookId]);
 
     return {books, booksError: error};
 

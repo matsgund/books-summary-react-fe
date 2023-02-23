@@ -11,6 +11,7 @@ export interface QueryItemsProps {
         items: string[];
     },
     querySearch: string;
+    latestBookId: string;
 }
  
 export interface ChangeQueryItemsProps {

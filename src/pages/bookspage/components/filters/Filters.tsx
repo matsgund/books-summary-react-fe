@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import FilterItem from '../filter-item/FilterItem';
 import { FiltersContext } from '../../BooksPage';
 import { FilterContextProps } from './FiltersInterface';

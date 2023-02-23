@@ -5,6 +5,7 @@ import Book from '@/interfaces/bookInterface';
   interface props {
         book: Book,
         displayMetadata: boolean;
+        
     }
 
   
@@ -16,7 +17,8 @@ const BookCard = ({book, displayMetadata}: props) => {
                 <img src={book.mainImage.asset.url} alt="book image"/>
             
                 <div className={classes["book-card-items-container"]}>
-                    <h3><b>{book.title}</b></h3>
+                    {/* cut the text when it gets too long */}
+                    <h3><b>{book.title.length > 30 ? book.title.substring(0, 30) + "..." : book.title}</b></h3>
                     {displayMetadata && (
                     <>
                         <div className={classes["book-card-items"]}>

@@ -23,7 +23,7 @@
     background: var(--primary-background-color);
     align-self: center;
     justify-self: center;
-    gap: 5em;
+    gap: 3em;
     width: 92%;
     height: 93%;
   }

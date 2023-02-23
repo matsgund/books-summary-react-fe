@@ -1,5 +1,6 @@
  // create an interface for book
  interface Book {
+    _id: string;
     title: string;
     body: any;
     publishedAt: Date;
