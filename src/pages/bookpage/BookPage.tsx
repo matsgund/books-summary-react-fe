@@ -2,8 +2,8 @@ import classes from'./BookPage.module.css';
 import useBook from './hooks/useBook';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import {useParams} from "react-router-dom";
-import DefaultProfileImage from '@/images/facebook-default-no-profile-pic.jpeg';
-import DefaultBookImage from '@/images/default-book-image.jpeg';
+import DefaultProfileImage from '@/assets/images/facebook-default-no-profile-pic.jpeg';
+import DefaultBookImage from '@/assets/images/default-book-image.jpeg';
 import RichTextComponent from '@/shared-components/richtext/RichText';
 
 

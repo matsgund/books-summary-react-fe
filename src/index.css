@@ -1,7 +1,7 @@
 :root {
   --primary-background-color: #f6f8f9;
-  --primary-background-image: url(./images/background.jpg);
-  --primary-books-hero-background-image: url(./images/books-background.png);
+  --primary-background-image: url(./assets/images/background.jpg);
+  --primary-books-hero-background-image: url(./assets/images/books-background.png);
   --primary-text-color: #674636;
   --primary-button-action-color: #fde275;
   --primary-link-color:  #494c5c;
@@ -17,11 +17,11 @@
 
 @font-face {
   font-family: 'lato-regular';
-  src: url('./fonts/Lato/Lato-Regular.ttf') format('truetype');
+  src: url('./assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'lato-bold';
-  src: url('./fonts/Lato/Lato-Bold.ttf') format('truetype');
+  src: url('./assets/fonts/Lato/Lato-Bold.ttf') format('truetype');
 }
 
 body {
