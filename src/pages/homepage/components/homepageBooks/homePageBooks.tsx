@@ -2,6 +2,7 @@ import useBooks from '../../hooks/useBooks';
 import { Link } from 'react-router-dom';
 import BookCard from '@/shared-components/book-card/BookCard';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
+import classes from './HomePageBooks.module.css';
 
 const HomePageBooks = () => {
 
@@ -10,7 +11,7 @@ const HomePageBooks = () => {
 
     return (
         <>
-            <h2>Recently added:</h2>
+            <h2 className={classes["h2-margin"]}>Recently added:</h2>
             {!booksError ? books.map((book, i) => (
                  <Link to={`/books/${book.slug.current}`} key={i}>
                      <BookCard key={i} book={book} displayMetadata={false}/>
