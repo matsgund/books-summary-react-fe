@@ -8,10 +8,10 @@ const HomePageBooks = () => {
 
     // get the books to be displayed on the homepage
     const { books, booksError } = useBooks();
-
+    books.map((book, i) => console.log(book.slug.current));
     return (
         <>
-            <h2 className={classes["h2-margin"]}>Recently added:</h2>
+            <h2 className={classes["home-grid-container"]}>Recently added:</h2>
             {!booksError ? books.map((book, i) => (
                  <Link to={`/books/${book.slug.current}`} key={i}>
                      <BookCard key={i} book={book} displayMetadata={false}/>
