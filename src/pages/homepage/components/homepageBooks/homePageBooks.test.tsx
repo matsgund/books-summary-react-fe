@@ -12,7 +12,8 @@ interface UseBooksResult {
 }
 
 // mock some different results from the useBooks hook
- vi.mock('../../hooks/useBooks');
+ const viMock = vi.mock('../../hooks/useBooks');
+ //@ts-ignore
  const mockUseBooks = useBooks as vi.mock<UseBooksResult>;
  const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: ""};
  const mockUseBooksResultsFailed = {books: booksData, booksError: "Something went wrong"};
