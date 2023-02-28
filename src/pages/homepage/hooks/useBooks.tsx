@@ -8,6 +8,7 @@ interface UseBooksResult {
 }
 
 const useBooks = () : UseBooksResult => {
+
     // query for fetching the 3 latest items
     const [books, setBooks] = useState<Book[]>([]);
     const [error, setError] = useState<string>("");
@@ -26,7 +27,7 @@ const useBooks = () : UseBooksResult => {
     const fetchBooks = async () => {
         const abortController = new AbortController();
         const options = { signal: abortController.signal };
-      
+    
         try {
           const booksResult: Book[] = await client.fetch(query, options);
           setBooks(booksResult);
