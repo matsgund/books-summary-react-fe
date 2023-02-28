@@ -6,7 +6,7 @@ describe('AboutPage', () => {
     
         test('should render about page', () => {
             render(<AboutPage />);
-            expect(screen.getByText('Abou')).toBeDefined();
+            expect(screen.getByText('About')).toBeDefined();
         });
     }
 

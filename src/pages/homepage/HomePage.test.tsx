@@ -11,7 +11,7 @@ describe('HomePageBooks', () => {
                 <HomePage />
             </MemoryRouter>
         );
-        expect(screen.getByText(/The Smmary Hub/)).toBeDefined();
+        expect(screen.getByText(/The Summary Hub/)).toBeDefined();
     });
 
     test('should give error unable to load books', () => {
