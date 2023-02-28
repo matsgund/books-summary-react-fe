@@ -12,7 +12,7 @@ interface UseBooksResult {
 }
 
 // mock some different results from the useBooks hook
- const viMock = vi.mock('../../hooks/useBooks');
+ vi.mock('../../hooks/useBooks');
  //@ts-ignore
  const mockUseBooks = useBooks as vi.mock<UseBooksResult>;
  const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: ""};
