@@ -8,6 +8,7 @@ interface UseBooksResult {
 }
 
 const useBooks = () : UseBooksResult => {
+
     // query for fetching the 3 latest items
     const [books, setBooks] = useState<Book[]>([]);
     const [error, setError] = useState<string>("");
@@ -24,13 +25,18 @@ const useBooks = () : UseBooksResult => {
 
     // fetch the data
     const fetchBooks = async () => {
+        const abortController = new AbortController();
+        const options = { signal: abortController.signal };
+    
         try {
-            const booksResult: Book[] = await client.fetch(query);
-            setBooks(booksResult);
+          const booksResult: Book[] = await client.fetch(query, options);
+          setBooks(booksResult);
         } catch(e) {
-            setError("Unable to load books");
+          setError("Unable to load books");
         }
-    }
+      
+        return () => abortController.abort();
+      }
 
     // run the fetch function on mount
     useEffect(() => {
