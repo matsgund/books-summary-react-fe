@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe('HomePageBooks', () => {
 
-    test('Should always display homepage title"', () => {
+    test('Should always display homepage titles"', () => {
         render(
             <MemoryRouter>
                 <HomePage />
