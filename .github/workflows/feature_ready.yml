@@ -38,7 +38,7 @@ jobs:
             else
               echo "::set-output name=ready::false"
             fi
-        -  name:  Create Pull Request
+        - name:  Create Pull Request
           if:  steps.check_commit_message.outputs.ready == 'true'
           uses:  peter-evans/create-pull-request@v3
           with:
