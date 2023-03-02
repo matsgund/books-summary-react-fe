@@ -20,17 +20,17 @@ jobs:
         run: npm run test
 
   # job that merges if tests pass and no conflicts detected
-  # merge:
-  #   runs-on: ubuntu-latest
-  #   needs: [ test ]
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Merge      
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         merge_method: squash
-  #         commit_message: "Merged PR ${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
-  #         delete_branch: true
+  merge:
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Merge      
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          merge_method: squash
+          commit_message: "Merged PR ${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
+          delete_branch: true
 
   # job that builds and deploys to azure
   build_and_deploy_job:
