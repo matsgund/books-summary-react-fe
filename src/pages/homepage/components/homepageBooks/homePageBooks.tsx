@@ -2,7 +2,7 @@ import useBooks from '../../hooks/useBooks';
 import { Link } from 'react-router-dom';
 import BookCard from '@/shared-components/book-card/BookCard';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
-import classes from './HomePageBooks.module.css';
+import classes from './homePageBooks.module.css';
 
 const HomePageBooks = () => {
 

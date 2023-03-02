@@ -4,7 +4,7 @@ import HomePageBooks from './components/homepageBooks/homePageBooks';
 
 describe('HomePageBooks', () => {
 
-    test('should render books or error message if unable to fetch recent bookss', () => {
+    test('should render books or error message if unable to fetch recent books', () => {
         expect(screen.findAllByText(/The Summary Hub/)).toBeDefined();
     });
 
