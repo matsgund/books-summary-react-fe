@@ -48,7 +48,7 @@ h1, h2, h3, p, label, span {
   color:var(--primary-text-color);
 }
 
-p {
+p, li {
   line-height: 1.75rem;
   font-size:var(--primary-text-size);
 }
