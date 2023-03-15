@@ -1,4 +1,5 @@
 import {PortableText} from '@portabletext/react'
+import {PortableTextComponents} from '@portabletext/react'
 import urlBuilder from '@sanity/image-url'
 import {getImageDimensions} from '@sanity/asset-utils'
 import client from '@/utils/sanityClient';
@@ -12,18 +13,6 @@ interface ComponentProps {
 interface ImageDimensions {
     width: number;
     height: number;
-}
-
-interface Components {
-    types: {
-        image: (props: ComponentProps) => JSX.Element;
-    };
-    list: {
-        bullet: (props: { children: ReactNode }) => JSX.Element;
-    };
-    listItem: {
-        bullet: (props: { children: ReactNode }) => JSX.Element;
-    };
 }
 
 const ImageComponent = ({value, isInline} : ComponentProps) => {
@@ -45,15 +34,15 @@ const ImageComponent = ({value, isInline} : ComponentProps) => {
         )
 }
 
-const components = {
+const components : PortableTextComponents = {
     types: {
         image: ImageComponent,
     },
     list: {
-        bullet: ({children} : { children: ReactNode } ) => <ul style={{listStyleType: 'auto'}}>{children}</ul>,
+        bullet: ({children}  ) => <ul style={{listStyleType: 'auto'}}>{children}</ul>,
     },
     listItem: {
-        bullet: ({children} : { children: ReactNode }) => <li style={{marginBottom: 10}}>{children}</li>,
+        bullet: ({children} ) => <li style={{marginBottom: 10}}>{children}</li>,
       },
 }
 
