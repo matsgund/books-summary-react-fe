@@ -27,17 +27,17 @@ describe('HomePageBooks', () => {
             expect(screen.findAllByText(/Recently added:|Unable to load books/)).toBeDefined();
          });
 
-        test('should render books if able to fetch recent books', () => {
+         test('should render books if able to fetch recent books', () => {
             mockUseBooks.mockReturnValue(mockUseBooksResultsSuccessfuly);
             render(
                 <MemoryRouter>
                     <HomePageBooks />
                 </MemoryRouter>
             );
-            expect(screen.getByText("Book Title")).toBeDefined();
-            expect(screen.getByText("Book Title 2")).toBeDefined();
-            expect(screen.getByText("Book Title 3")).toBeDefined();
+            expect(screen.getByAltText("book image")).toBeDefined();
+            expect(screen.getAllByAltText("book image").length).toBe(3);
         });
+        
 
         test('If API returns an empty array unable to find books should be displayed', () => {
             mockUseBooks.mockReturnValue(mockUseBooksResultsEmpty);
