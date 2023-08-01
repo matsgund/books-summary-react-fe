@@ -3,6 +3,7 @@
     _id: string;
     title: string;
     body: any;
+    url: string;
     publishedAt: Date;
     author : {
         name: string;

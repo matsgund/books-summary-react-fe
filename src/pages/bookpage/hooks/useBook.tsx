@@ -17,6 +17,7 @@ const bookQuery: string = `*[_type == "book" && slug.current == "${slug}"]{
         title,
         slug,
         body,
+        url,
         publishedAt,
         author->{
             name,

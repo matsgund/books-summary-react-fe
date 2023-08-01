@@ -34,11 +34,12 @@ const BookPage = () => {
                         <div className={classes["book-body-text-container"]}>
                             <RichTextComponent isInline={true} value={book.body} />
                         </div>
-                        <div className={classes["book-body-image-container"]}>
-                            <img src={book.mainImage.asset.url ? book.mainImage.asset.url : DefaultBookImage} alt={book.title}/>                        
-                            <button className="btn btn-action" type="button">Buy the book!</button>
-                        </div>
-                     
+                        <a href={book.url}  target="_blank" rel="noopener noreferrer">
+                            <div className={classes["book-body-image-container"]}>
+                                <img src={book.mainImage.asset.url ? book.mainImage.asset.url : DefaultBookImage} alt={book.title}/>                        
+                                <button className="btn btn-action" type="button">Buy the book!</button>
+                            </div>
+                        </a>
                     </article>
                 </div>
             </div>  
