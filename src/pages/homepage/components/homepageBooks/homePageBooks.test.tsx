@@ -34,12 +34,14 @@ describe('HomePageBooks', () => {
                     <HomePageBooks />
                 </MemoryRouter>
             );
-            expect(screen.getByAltText("book image").getAttribute('src')).toBe('https://via.placeholder.com/150');
-            expect(screen.getAllByAltText("book image").length).toBe(3);
+            const bookImages = screen.getAllByAltText("book image");
+            expect(bookImages.length).toBe(3);
+            expect(bookImages[0].getAttribute('src')).toBe('https://via.placeholder.com/150');
+            expect(bookImages[1].getAttribute('src')).toBe('https://via.placeholder.com/150');
+            expect(bookImages[2].getAttribute('src')).toBe('https://via.placeholder.com/150');
         });
         
-        
-
+    
         test('If API returns an empty array unable to find books should be displayed', () => {
             mockUseBooks.mockReturnValue(mockUseBooksResultsEmpty);
             render(
