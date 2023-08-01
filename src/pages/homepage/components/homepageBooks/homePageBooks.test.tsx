@@ -34,9 +34,10 @@ describe('HomePageBooks', () => {
                     <HomePageBooks />
                 </MemoryRouter>
             );
-            expect(screen.getByAltText("book image")).toBeDefined();
+            expect(screen.getByAltText("book image").getAttribute('src')).toBe('https://via.placeholder.com/150');
             expect(screen.getAllByAltText("book image").length).toBe(3);
         });
+        
         
 
         test('If API returns an empty array unable to find books should be displayed', () => {
