@@ -3,7 +3,7 @@ import {PortableTextComponents} from '@portabletext/react'
 import urlBuilder from '@sanity/image-url'
 import {getImageDimensions} from '@sanity/asset-utils'
 import client from '@/utils/sanityClient';
-import  { ReactNode } from 'react';
+
 
 interface ComponentProps {
     value: any;

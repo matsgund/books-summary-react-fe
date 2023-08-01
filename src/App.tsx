@@ -6,6 +6,11 @@ import AboutPage from '@/pages/aboutpage/AboutPage';
 import Header from '@/shared-components/header/Header';
 import Footer from '@/shared-components/footer/Footer';
 import {BrowserRouter,Routes, Route} from "react-router-dom";
+import ReactGA from 'react-ga4';
+
+// Initialize Google Analytics
+const Analytics_ID = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
+ReactGA.initialize(Analytics_ID);
 
 function App() {
   return (

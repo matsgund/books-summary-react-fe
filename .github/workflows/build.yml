@@ -45,6 +45,9 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
+          VITE_GOOGLE_ANALYTICS_ID: ${{ secrets.VITE_GOOGLE_ANALYTICS_ID }}  
    
 
 

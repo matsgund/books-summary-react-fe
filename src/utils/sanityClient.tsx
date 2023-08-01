@@ -1,5 +1,7 @@
 import SanityClient from '@sanity/client';
 
+const SanityProjectID = import.meta.env.VITE_SANITY_PROJECT_ID;
+
 interface SanityClientConfig {
   projectId: string;
   dataset: string;
@@ -8,7 +10,7 @@ interface SanityClientConfig {
 }
 
 const clientConfig: SanityClientConfig = {
-  projectId: 'ynzjouhk',
+  projectId: SanityProjectID,
   dataset: 'production',
   useCdn: true,
   apiVersion: '2022-02-01',
