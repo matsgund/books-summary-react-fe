@@ -1,7 +1,9 @@
 import {Link} from "react-router-dom";
 import classes from './NavBar.module.css'
+import usePageTracking from "@/utils/usePageTracking";
 
 const NavBar = () => {
+    usePageTracking();
     return (
         <div className={classes["nav-component"]}>
             <nav>
