@@ -18,6 +18,8 @@ jobs:
         run: npm install
       - name: Test
         run: npm run test
+        env:
+          VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
 
   # job that builds and deploys to azure
   build_and_deploy_job:
