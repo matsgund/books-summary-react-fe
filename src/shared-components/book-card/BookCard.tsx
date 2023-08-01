@@ -11,16 +11,16 @@ import Book from '@/interfaces/bookInterface';
   
 const BookCard = ({book, displayMetadata}: props) => {
 
+    const bookCardClass = displayMetadata ? classes["book-card"] : classes["book-card-small"];
+
     return (
         <div className={classes["book-card-container"]}>
-            <div className={classes["book-card"]}>
+            <div className={bookCardClass}>
                 <img src={book.mainImage.asset.url} alt="book image"/>
-            
-                <div className={classes["book-card-items-container"]}>
-                    {/* cut the text when it gets too long */}
-                    <h3><b>{book.title.length > 30 ? book.title.substring(0, 30) + "..." : book.title}</b></h3>
-                    {displayMetadata && (
-                    <>
+                {displayMetadata && (
+                    <div className={classes["book-card-items-container"]}>
+                        {/* cut the text when it gets too long */} 
+                        <h3><b>{book.title}</b></h3>
                         <div className={classes["book-card-items"]}>
                             <span><b>Category</b></span>
                             {book.category && <span>{book.category.title}</span>}
@@ -31,9 +31,8 @@ const BookCard = ({book, displayMetadata}: props) => {
                             {book.author && <span>{book.author.name}</span>}
                             {!book.author && <span>Unknown</span>}
                         </div>
-                    </>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     )
