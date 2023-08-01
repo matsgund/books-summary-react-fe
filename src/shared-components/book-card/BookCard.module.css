@@ -4,65 +4,58 @@
   container-type: inline-size;
 }
 
-.book-card {
+.book-card,
+.book-card-small {
   display: grid;
   align-items: stretch;
-  grid-template-columns: 1fr;
   background-color: white;
   padding: .25rem;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  grid-template-rows:  1fr minmax(auto, 160px);
-  }
+}
 
-  .book-card-small {
-    display: grid;
-    align-items: stretch;
-    background-color: white;
-    padding: .25rem;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
+.book-card {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr minmax(auto, 160px);
+}
 
-  .book-card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    cursor: pointer;
-  }
-  
-  .book-card-container img {
-    width: 100%;
-    object-fit: cover;
-  }
+.book-card:hover,
+.book-card-small:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+}
 
-  .book-card-items-container {
-    display: grid;
-    justify-self: center;
-    justify-content: center;
-    width: 80%;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr .4fr;
-  }
+.book-card-container img {
+  width: 100%;
+  object-fit: cover;
+}
 
-  .book-card-items-container h3:nth-child(1) {
-    display: block;
-    margin-bottom: 5px;
-    width: 100%;
-    align-self: center;
-    grid-column: 1 / -1;
-  }
+.book-card-items-container {
+  display: grid;
+  justify-self: center;
+  justify-content: center;
+  width: 80%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr .4fr;
+}
 
-  .book-card-items {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    padding: .5rem 0rem .5rem 0rem;
-  }
+.book-card-items-container h3:nth-child(1) {
+  display: block;
+  margin-bottom: 5px;
+  width: 100%;
+  align-self: center;
+  grid-column: 1 / -1;
+}
 
+.book-card-items {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding: .5rem 0rem .5rem 0rem;
+}
 
 @container (max-width: 200px) {
   .book-card {
-    grid-template-rows:  1fr minmax(auto, 100px);
+    grid-template-rows: 1fr minmax(auto, 100px);
   }
 }
-
-  
