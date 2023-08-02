@@ -8,6 +8,7 @@ export const booksData: Book[] = [
         _id: '1',
         title: 'Book Title',
         body: 'Book Body',
+        url: 'https://www.google.com',
         publishedAt: new Date(),
         author: {
             name: 'Author Name',
@@ -38,6 +39,7 @@ export const booksData: Book[] = [
         _id: '2',
         title: 'Book Title 2',
         body: 'Book Body 2',
+        url: 'https://www.google.com',
         publishedAt: new Date(),
         author: {
             name: 'Author Name 2',
@@ -68,6 +70,7 @@ export const booksData: Book[] = [
         _id: '3',
         title: 'Book Title 3',
         body: 'Book Body 3',
+        url: 'https://www.google.com',
         publishedAt: new Date(),
         author: {
             name: 'Author Name 3',
