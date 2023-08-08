@@ -16,7 +16,6 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
     gap: 2rem;
     padding-bottom: 2rem; 
-    z-index: -1;
   }
 
   .books-main a {
