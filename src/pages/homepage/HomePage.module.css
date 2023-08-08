@@ -3,6 +3,7 @@
     height: 100vh;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
+    padding: 0rem 1.5rem 0rem 1.5rem;
     grid-template-areas:
     "main"
   }
@@ -13,7 +14,7 @@
     background-position: center;
     background-size: cover;
     min-width: max-content;
-    z-index: 1;
+    z-index: 100;
   }
 
   .home-main {
@@ -24,14 +25,14 @@
     align-self: center;
     justify-self: center;
     gap: 3em;
-    width: 92%;
     height: 93%;
+    margin-top: 5rem;
   }
 
   .home-main-books {
     display: grid;
     grid-template-columns: repeat(auto-fit,  minmax(260px, 1fr));
-    gap: .5em;
+    gap: 2em;
   }
 
   .home-main-books h2 {
@@ -51,6 +52,7 @@
   @media screen and (min-width: 1200px) {
     .home-grid-container {
       grid-template-columns: repeat(8, 1fr);
+      padding: 0rem;
       grid-template-areas:
       "aside aside aside aside aside main main main"
     }
@@ -58,10 +60,12 @@
       justify-content: center;
       width: 80%;
       height: 85%;
+      margin-top: 0;
     }
     .home-main-books {
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: .2fr 1fr;
+      gap: .5rem;
     }
   }
 
