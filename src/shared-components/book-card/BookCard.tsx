@@ -3,13 +3,11 @@ import Book from '@/interfaces/bookInterface';
 
   // create an interface for book
   interface props {
-        book: Book,
-        displayMetadata: boolean;
-        
+        book: Book,   
     }
 
   
-const BookCard = ({book, displayMetadata}: props) => {
+const BookCard = ({book}: props) => {
 
     return (
         <div className={classes["book-card-container"]}>

@@ -42,7 +42,6 @@ const Books = () => {
                                     <BookCard
                                         key={i} 
                                         book={item}
-                                        displayMetadata={true}
                                         />
                                 </Link>
                             )
@@ -52,7 +51,6 @@ const Books = () => {
                                     <BookCard
                                         key={i} 
                                         book={item}
-                                        displayMetadata={false}
                                         />
                                 </Link>
                             )
