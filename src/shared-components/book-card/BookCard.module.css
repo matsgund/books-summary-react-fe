@@ -4,8 +4,7 @@
   container-type: inline-size;
 }
 
-.book-card,
-.book-card-small {
+.book-card {
   display: grid;
   align-items: stretch;
   background-color: white;
@@ -14,10 +13,6 @@
   transition: 0.3s;
 }
 
-.book-card {
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr minmax(auto, 160px);
-}
 
 .book-card:hover,
 .book-card-small:hover {
@@ -54,8 +49,4 @@
   padding: .5rem 0rem .5rem 0rem;
 }
 
-@container (max-width: 200px) {
-  .book-card {
-    grid-template-rows: 1fr minmax(auto, 100px);
-  }
-}
+

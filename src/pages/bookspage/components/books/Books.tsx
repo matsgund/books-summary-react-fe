@@ -52,7 +52,7 @@ const Books = () => {
                                     <BookCard
                                         key={i} 
                                         book={item}
-                                        displayMetadata={true}
+                                        displayMetadata={false}
                                         />
                                 </Link>
                             )
