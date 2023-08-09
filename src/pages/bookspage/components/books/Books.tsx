@@ -10,7 +10,6 @@ import { BooksContextProps } from './BooksInterface';
 
 const Books = () => {
 
-
     const {queryItems, querySearch} = useContext(BooksContext) as BooksContextProps;
     const [latestBookId, setLatestBookId] = useState<string>("");
     const {books, booksError} = useBooks({queryItems, querySearch, latestBookId});

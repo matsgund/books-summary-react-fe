@@ -77,7 +77,6 @@ input[type="checkbox"] {
   transition: all ease 0.2s;
 }
   
-
 .btn-action {
   background-color: var(--primary-button-action-color);
   color: var(--primary-text-color)
