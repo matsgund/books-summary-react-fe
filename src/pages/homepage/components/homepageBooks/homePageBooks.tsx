@@ -14,6 +14,9 @@ const HomePageBooks = () => {
             <h2 className={classes["home-grid-container"]}>Recently added:</h2>
             {!booksError && books.length > 0 ? books.map((book, i) => (
                 <Link to={`/books/${book.slug.current}`} key={i}>
+                   {i==2 && <div className={classes["home-book-image"]}> 
+                        <img src="src/assets/images/Emne2.png" alt="girl reading" />
+                    </div>}
                     <BookCard key={i} book={book} />
                 </Link>
             )):

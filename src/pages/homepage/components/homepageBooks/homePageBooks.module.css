@@ -1,3 +1,15 @@
 h2-margin {
     margin-bottom: 5px;
 }
+
+.home-book-image {
+    position: relative;
+}
+
+.home-book-image img {
+    position: absolute;
+    width: 110px;
+    z-index: 1;
+    top: -10.8rem;
+    transform: scaleX(-1);
+}
