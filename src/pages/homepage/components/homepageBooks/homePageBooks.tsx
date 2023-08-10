@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BookCard from '@/shared-components/book-card/BookCard';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import classes from './homePageBooks.module.css';
+import image from '@/assets/images/Emne2.png';
 
 const HomePageBooks = () => {
 
@@ -15,7 +16,7 @@ const HomePageBooks = () => {
             {!booksError && books.length > 0 ? books.map((book, i) => (
                 <Link to={`/books/${book.slug.current}`} key={i}>
                    {i==2 && <div className={classes["home-book-image"]}> 
-                        <img src="src/assets/images/Emne2.png" alt="girl reading" />
+                        <img src={image} alt="girl reading" />
                     </div>}
                     <BookCard key={i} book={book} />
                 </Link>
