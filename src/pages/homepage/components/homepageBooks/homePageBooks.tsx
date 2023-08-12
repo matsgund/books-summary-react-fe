@@ -16,7 +16,7 @@ const HomePageBooks = () => {
             {!booksError && books.length > 0 ? books.map((book, i) => (
                 <Link to={`/books/${book.slug.current}`} key={i}>
                    {i==2 && <div className={classes["home-book-image"]}> 
-                        <img src={image} alt="girl reading" />
+                        <img  src={image} alt="girl reading" />
                     </div>}
                     <BookCard key={i} book={book} />
                 </Link>

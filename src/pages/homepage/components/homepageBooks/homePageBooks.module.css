@@ -3,7 +3,7 @@ h2-margin {
 }
 
 .home-book-image {
-    position: relative;
+    position: absolute;
 }
 
 .home-book-image img {
