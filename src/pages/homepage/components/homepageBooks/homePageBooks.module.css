@@ -2,6 +2,10 @@ h2-margin {
     margin-bottom: 5px;
 }
 
+.home-link-container:hover {
+    position: absolute;
+}
+
 .home-book-image {
     position: absolute;
 }
@@ -10,6 +14,6 @@ h2-margin {
     position: absolute;
     width: 110px;
     z-index: 1;
-    top: -10.8rem;
-    transform: scaleX(-1);
+    top: -8.9rem;
+  
 }
