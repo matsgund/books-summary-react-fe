@@ -52,8 +52,7 @@ Deployed to azure app service using github actions.
 - **Mats Gundersen**  - [matsgund](https://github.com/matsgund)
 
 ## Website design
-
-
+<img width="901" alt="site" src="https://github.com/matsgund/books-summary-react-fe/assets/25957285/fe3c5b32-275c-409c-ae51-4d19710b990b">
 
 ## URL to deployed application
 https://www.thesummaryhub.com/
