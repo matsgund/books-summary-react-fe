@@ -2,7 +2,7 @@
 
 This repository contains the source code for the "books-summary-react-fe" project. The project is a React application that allows users to search for books and view their summaries. The project is a frontend application that consumes the books-summary-api project.
 
-![Employee data](/repository/assets/employee.png?raw=true "Employee Data title")
+<img width="901" alt="site" src="https://github.com/matsgund/books-summary-react-fe/assets/25957285/b415ee2a-36df-4bff-81d1-5a2fd8a40bcc">
 
 ## Getting Started
 
