@@ -21,4 +21,10 @@
     color: var(--primary-link-color);
 }
 
+.active {
+    text-decoration: underline;
+    font-weight: bold; /* Makes the active link text bolder */
+}
+
+
 
