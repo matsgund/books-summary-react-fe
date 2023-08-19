@@ -9,6 +9,7 @@ import { MemoryRouter } from 'react-router-dom';
 interface UseBooksResult {
     books: Book[];
     booksError: string;
+    loading: boolean;
 }
 
 // mock some different results from the useBooks hook
@@ -16,7 +17,7 @@ interface UseBooksResult {
  //@ts-ignore
  const mockUseBooks = useBooks as vi.mock<UseBooksResult>;
  const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: ""};
- const mockUseBooksResultsFailed = {books: booksData, booksError: "Something went wrong"};
+ const mockUseBooksResultsFailed = {books: booksData, booksError: "Something went wrong", loading: false};
  const mockUseBooksResultsEmpty = {books: [], booksError: ""};
 
 describe('HomePageBooks', () => {
