@@ -16,9 +16,9 @@ interface UseBooksResult {
  vi.mock('../../hooks/useBooks');
  //@ts-ignore
  const mockUseBooks = useBooks as vi.mock<UseBooksResult>;
- const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: ""};
+ const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: "", loading: false};
  const mockUseBooksResultsFailed = {books: booksData, booksError: "Something went wrong", loading: false};
- const mockUseBooksResultsEmpty = {books: [], booksError: ""};
+ const mockUseBooksResultsEmpty = {books: [], booksError: "", loading: false};
 
 describe('HomePageBooks', () => {
     
