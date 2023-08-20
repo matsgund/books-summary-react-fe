@@ -14,7 +14,7 @@ const HomePageBooks = () => {
     return (
         <>
             <h2 className={classes["home-grid-container"]}>Recently added:</h2>
-           { booksError || books.length == 0 && <ErrorDisplayer error="Unable to load books"/>}
+           { booksError && <ErrorDisplayer error="Unable to load books"/>}
            { loading && !booksError && <LoadingSpinner isVisible={loading}  />}
            { !booksError && books.length > 0 && books.map((book, i) => (
                 <Link to={`/books/${book.slug.current}`} key={i} className='home-link-container'>
