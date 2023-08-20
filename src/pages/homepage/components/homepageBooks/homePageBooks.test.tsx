@@ -1,5 +1,5 @@
 import {describe, test, expect, vi} from 'vitest';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import HomePageBooks from './homePageBooks';
 import Book from '@/interfaces/bookInterface';
 import {booksData} from '@/data/books.data';
@@ -22,10 +22,10 @@ interface UseBooksResult {
 
 describe('HomePageBooks', () => {
     
-         test('should render books or error message if unable to fetch recent books', () => {
+         test('should render books or error message if unable to fetch recent books', async () => {
             mockUseBooks.mockReturnValue(mockUseBooksResultsFailed); 
             render(<HomePageBooks />);
-            expect(screen.findAllByText(/Recently added:|Unable to load books/)).toBeDefined();
+            await waitFor(()=> expect(screen.findAllByText(/Recently added:|Unable to load books/)).toBeDefined());
          });
 
          test('should render books if able to fetch recent books', () => {
