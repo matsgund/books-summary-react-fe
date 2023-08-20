@@ -4,7 +4,8 @@ import  Category  from '@/interfaces/categoryInterface';
 
 interface CategoriesResult {
     categories: Category[];
-    categoryError: string;
+    error: string;
+    loading: boolean;
 }
 
 // custom hook for fetching categories
@@ -12,6 +13,7 @@ const useCategories = () : CategoriesResult =>  {
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
 
     //query for fetching categories. Return title, slug and bookCount for each category.
     const categoriesQuery : string = `*[_type == "category"] {
@@ -22,11 +24,14 @@ const useCategories = () : CategoriesResult =>  {
 
     // fetch categories
     const fetchCategories = async () => {
+        setLoading(true);
         try {
             const categoriesResult: Category[] = await client.fetch<Category[]>(categoriesQuery);
             setCategories(categoriesResult)
+            setLoading(false);
         } catch (e) {
             setError("Something went wrong while fetching categories");
+            setLoading(false);
         }
     }
 
@@ -35,7 +40,7 @@ const useCategories = () : CategoriesResult =>  {
         fetchCategories();   
     }, []);
 
-    return {categories, categoryError: error};
+    return {categories, error, loading};
 }
 
 export default useCategories;
