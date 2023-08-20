@@ -23,13 +23,13 @@ interface UseBooksResult {
 describe('HomePageBooks', () => {
     
          test('should render books or error message if unable to fetch recent books', async () => {
-            mockUseBooks.mockReturnValue(mockUseBooksResultsFailed); 
+            await mockUseBooks.mockReturnValue(mockUseBooksResultsFailed); 
             render(<HomePageBooks />);
             await waitFor(()=> expect(screen.findAllByText(/Recently added:|Unable to load books/)).toBeDefined());
          });
 
-         test('should render books if able to fetch recent books', () => {
-            mockUseBooks.mockReturnValue(mockUseBooksResultsSuccessfuly);
+         test('should render books if able to fetch recent books', async () => {
+            await mockUseBooks.mockReturnValue(mockUseBooksResultsSuccessfuly);
             render(
                 <MemoryRouter>
                     <HomePageBooks />
@@ -43,14 +43,14 @@ describe('HomePageBooks', () => {
         });
         
     
-        test('If API returns an empty array unable to find books should be displayed', () => {
-            mockUseBooks.mockReturnValue(mockUseBooksResultsEmpty);
+        test('If API returns an empty array unable to find books should be displayed', async () => {
+            await mockUseBooks.mockReturnValue(mockUseBooksResultsEmpty);
             render(
                 <MemoryRouter>
                     <HomePageBooks />
                 </MemoryRouter>
             );
-            expect(screen.getByText("Unable to load books")).toBeDefined();
+           await waitFor(()=> expect(screen.getByText("Unable to load books")).toBeDefined());
         }); 
     }
 );
