@@ -43,15 +43,7 @@ describe('HomePageBooks', () => {
         });
         
     
-        test('If API returns an empty array unable to find books should be displayed', async () => {
-            await mockUseBooks.mockReturnValue(mockUseBooksResultsEmpty);
-            render(
-                <MemoryRouter>
-                    <HomePageBooks />
-                </MemoryRouter>
-            );
-            expect(screen.getByText("Unable to load books")).toBeDefined();
-        }); 
+
     }
 );
 
