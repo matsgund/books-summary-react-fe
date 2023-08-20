@@ -7,25 +7,24 @@ import classes from './homePageBooks.module.css';
 import image from '@/assets/images/Emne5.png';
 
 const HomePageBooks = () => {
-
-    // get the books to be displayed on the homepage
     const { books, booksError, loading } = useBooks();
    
     return (
         <>
             <h2 className={classes["home-grid-container"]}>Recently added:</h2>
-           { booksError && <ErrorDisplayer error="Unable to load books"/>}
-           { loading && !booksError && <LoadingSpinner isVisible={loading}  />}
-           { !booksError && books.length > 0 && books.map((book, i) => (
+            { loading && !booksError && <LoadingSpinner isVisible={loading}  />}
+            { !booksError && books.length === 0 && <ErrorDisplayer error="Unable to load books" />}
+            { !booksError && books.length > 0 && books.map((book, i) => (
                 <Link to={`/books/${book.slug.current}`} key={i} className='home-link-container'>
-                   {i==2 && <div className={classes["home-book-image"]}> 
-                        <img src={image} alt="girl reading" />
+                    {i === 2 && <div className={classes["home-book-image"]}> 
+                        <img src={image} alt="Illustration of a girl reading a book" />
                     </div>}
                     <BookCard key={i} book={book} />
                 </Link>
             ))}
          </>
     );
-    };
+};
+
 
 export default HomePageBooks;
