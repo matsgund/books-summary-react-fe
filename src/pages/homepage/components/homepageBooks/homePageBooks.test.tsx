@@ -50,7 +50,7 @@ describe('HomePageBooks', () => {
                     <HomePageBooks />
                 </MemoryRouter>
             );
-           await waitFor(()=> expect(screen.getByText("Unable to load books")).toBeDefined());
+            expect(screen.getByText("Unable to load books")).toBeDefined();
         }); 
     }
 );
