@@ -26,13 +26,13 @@
     justify-self: center;
     gap: 3em;
     height: 93%;
-    margin-top: 5rem;
+    margin-top: 10rem;
   }
 
   .home-main-books {
     display: grid;
-    grid-template-columns: repeat(auto-fit,  minmax(260px, 1fr));
-    gap: 2em;
+    grid-template-columns: repeat(auto-fit,  minmax(100px, 1fr));
+    gap: 0.5em;
   }
 
   .home-main-books h2 {
