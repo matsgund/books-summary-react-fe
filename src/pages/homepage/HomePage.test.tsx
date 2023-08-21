@@ -14,14 +14,6 @@ describe('HomePageBooks', () => {
         expect(screen.getByText('The Summary Hub')).toBeDefined();
     });
 
-    test('should render uable to load books', () => {
-        render(
-            <MemoryRouter>
-                <HomePage />
-            </MemoryRouter>
-        );
-        expect(screen.getByText('Unable to load books')).toBeDefined();
-    });
     }
 );
 
