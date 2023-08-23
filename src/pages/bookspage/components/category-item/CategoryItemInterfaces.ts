@@ -10,4 +10,5 @@ export interface CategoryItemProps {
     i: number;
     refArray:
          React.MutableRefObject<HTMLInputElement[]>;
+    queryItems: string[];     
 }

@@ -1,35 +1,74 @@
-import { useContext } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CategoryItem from '../category-item/CategoryItem';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/shared-components/loading-spinner/LoadingSpinner';
 import useCategories from '../../hooks/useCategories';
-import { CategoryContext } from '../../BooksPage';
-import {CategoryContextProps } from './categoriesInterface';
-
+import { QueryItems } from '../../BooksPageInterface';
 
 const Categories = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const refArray = useRef<HTMLInputElement[]>([]);
+    const [queryItems, setQueryItems] = useState<QueryItems>({ items: [] });
+    const { categories, error, loading } = useCategories();
 
-    const { changeQueryItems, refArray } = useContext(CategoryContext) as CategoryContextProps;
-    const {categories, error, loading} = useCategories();
-   
+    // Initialize queryItems from URL
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const initialItems = params.get('categories')?.split(',') || [];
+        setQueryItems({ items: initialItems });
+
+        // Also set the checkboxes to checked based on URL
+        if (refArray.current) {
+            initialItems.forEach((item) => {
+                const checkbox = refArray.current.find((element) => element.id === item);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+    }, [location.search]);
+
+    const changeQueryItems = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, checked } = e.target;
+        const { items } = queryItems;
+
+        let newItems;
+        if (checked) {
+            newItems = [...items, value];
+        } else {
+            newItems = items.filter((e) => e !== value);
+        }
+
+        setQueryItems({ items: newItems });
+
+        // Update URL
+        const params = new URLSearchParams();
+        params.append('categories', newItems.join(','));
+        navigate({ search: params.toString() });
+    };
+
     return (
         <>
             <h3>Categories</h3>
             <ul>
-                {error && <ErrorDisplayer error="Unable to load categories"/>}
-                {loading && !error && <LoadingSpinner isVisible={loading}/> }
-                {!error && categories.map((item, i) => (
-                <CategoryItem
-                        key={i}
-                        item={item}
-                        changeQueryItems={changeQueryItems}
-                        i={i}
-                        refArray={refArray}
-                    />
-                ) )}
+                {error && <ErrorDisplayer error="Unable to load categories" />}
+                {loading && !error && <LoadingSpinner isVisible={loading} />}
+                {!error &&
+                    categories.map((item, i) => (
+                        <CategoryItem
+                            key={i}
+                            item={item}
+                            changeQueryItems={changeQueryItems}
+                            i={i}
+                            refArray={refArray}
+                            queryItems={queryItems.items}
+                        />
+                    ))}
             </ul>
         </>
-    )
-}
+    );
+};
 
 export default Categories;

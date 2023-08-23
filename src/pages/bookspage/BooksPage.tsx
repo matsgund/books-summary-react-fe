@@ -17,19 +17,11 @@ export const BooksContext = createContext<BooksContextProps | null>(null);
 
 const BooksPage = () => {
 
-    const refArray = useRef<HTMLInputElement[]>([]);
-    const [querySearch, setQuerySearch] = useState<string>("");
-    const [queryFilter, setQueryFilter] = useState<string>("");
-    const [queryItems, setQueryItems] = useState<QueryItems>({items:[]});
-    const {changeQueryItems} = useChangeQueryItems({queryItems, setQueryItems, refArray});
-    const {clearQueryItems} = useClearQueryItems({setQueryItems, refArray});
   
     return (
         <div className={classes["books-grid-container"]}>
-            <div className={classes["books-aside-left"]}>
-                <CategoryContext.Provider value={ {changeQueryItems, refArray} }>
-                    <Categories/>
-                </CategoryContext.Provider>
+            <div className={classes["books-aside-left"]}>  
+                <Categories/>
             </div>
             <div className={classes["books-hero-container"]}>
                 <div className={classes["books-hero"]}>
@@ -37,7 +29,7 @@ const BooksPage = () => {
                     <p>Here you can find all the books we have in our library.</p>
                 </div>
             </div>
-            <div className={classes["books-filter-container"]}>
+            {/* <div className={classes["books-filter-container"]}>
                 <SearchContext.Provider value={ {setQuerySearch, setQueryFilter, queryFilter} }>
                     <SearchBooks/>
                 </SearchContext.Provider>
@@ -52,7 +44,7 @@ const BooksPage = () => {
                     <Books/>
                 </BooksContext.Provider>
             </div>
-            <div className={classes["books-aside-right"]}></div>
+            <div className={classes["books-aside-right"]}></div> */}
         </div> 
     )  
 
