@@ -1,79 +1,91 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import client from '@/utils/sanityClient';
-import { QueryItemsProps, BooksResult } from './hooksInterfaces';
+import { BooksResult } from './hooksInterfaces';
 import Book from '@/interfaces/bookInterface';
 
+interface State {
+  books: Book[];
+  error: string;
+}
 
-// make a synchronous call to sanity to fetch books
-const useBooks  = ({queryItems, querySearch, latestBookId} : QueryItemsProps) : BooksResult  =>  {
- 
-    const [books, setBooks] = useState<Book[]>([]);
-    const [error, setError] = useState<string>("");
-    const bookLimit : number  = 10;
+type Action =
+  | { type: 'SET_BOOKS'; payload: Book[] }
+  | { type: 'APPEND_BOOKS'; payload: Book[] }
+  | { type: 'SET_ERROR'; payload: string };
 
-    let booksQueryConstructor = (reset: boolean) : string => {
-        
-        let useLatestBook : boolean = false;
-        if(!reset) {
-            useLatestBook = true;
-        }
-        
-        const booksQuery : string = `*[_type == "book" 
-        && (${querySearch.length > 0 ? `title match "${querySearch}" || author->name match "${querySearch}"` : `true`} )
-        && (${queryItems.items.length > 0 ? `category->slug.current in [${queryItems.items.map(item => `'${item}'`)}]` : `true`})
-        && (${latestBookId.length > 0 && useLatestBook ? `_id > "${latestBookId}"` : `true`})
+const initialState: State = {
+  books: [],
+  error: '',
+};
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET_BOOKS':
+      return { ...state, books: action.payload };
+    case 'APPEND_BOOKS':
+      return { ...state, books: [...state.books, ...action.payload] };
+    case 'SET_ERROR':
+      return { ...state, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const useBooks = (latestBookId: string): BooksResult => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const location = useLocation();
+  const bookLimit = 100;
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const queryItems = params.get('categories')?.split(',') || [];
+    const querySearch = params.get('search') || '';
+
+    const booksQueryConstructor = (reset: boolean): string => {
+        const booksQuery: string = `*[_type == "book" 
+        && (${querySearch ? `title match "${querySearch}" || author->name match "${querySearch}"` : `true`})
+        && (${queryItems.length ? `category->slug.current in [${queryItems.map(item => `'${item}'`)}]` : `true`})
+          
         ]
-    
         | order(_id) [0...${bookLimit}]
-    
-            {
-                _id,
-                title,
-                slug,
-                author->{name},
-                category->{title,slug},  
-                mainImage{
-                    asset->{
-                    _id,
-                    url
-                    }
-                }
-            }`;
-
-            return booksQuery;
-
-    }
-  
-    // fetch books
-    const fetchBooks = async (resetBooks: boolean) => {
-        try {
-            const query = booksQueryConstructor(resetBooks);
-            const booksResult : Book[] = await client.fetch(query);
-            if(resetBooks) {
-                setBooks(booksResult);
-            } else {
-                // set a time out to simulate a loading state
-                setBooks([...books, ...booksResult]);
+        {
+        _id,
+        title,
+        slug,
+        author->{name},
+        category->{title,slug},
+        mainImage{
+            asset->{
+            _id,
+            url
             }
-        } catch(e) {
-            setError("Something went wrong while fetching books");
         }
-    }
+        }`;
 
-    // fetch books and categories on page load and when queryItems changes
-    useEffect(() => {
-        fetchBooks(true);
-    }, [queryItems, querySearch]);
+        return booksQuery;
+    };
 
-     // fetch books and categories on page load and when latestBookId changes
-     useEffect(() => {
-        fetchBooks(false);
-    }, [latestBookId]);
+    const fetchBooks = async (reset: boolean) => {
+      try {
+        const query = booksQueryConstructor(reset);
+        const booksResult: Book[] = await client.fetch(query);
+        if (reset) {
+          dispatch({ type: 'SET_BOOKS', payload: booksResult });
+        } else {
+          dispatch({ type: 'APPEND_BOOKS', payload: booksResult });
+        }
+      } catch (e) {
+        dispatch({ type: 'SET_ERROR', payload: 'Something went wrong while fetching books' });
+      }
+    };
 
-    return {books, booksError: error};
 
-} 
+    let shouldFetchBooks = (!latestBookId || queryItems.length || querySearch.length);
+    fetchBooks(shouldFetchBooks);
+  }, [latestBookId, location.search]);
 
-export default useBooks;    
- 
- 
+  return { books: state.books, booksError: state.error };
+};
+
+export default useBooks;

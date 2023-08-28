@@ -1,49 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
 import client from '@/utils/sanityClient';
-import  Category  from '@/interfaces/categoryInterface';
+import Category from '@/interfaces/categoryInterface';
 
 interface CategoriesResult {
-    categories: Category[];
-    error: string;
-    loading: boolean;
+  categories: Category[];
+  error: string;
+  loading: boolean;
 }
 
-// custom hook for fetching categories
-const useCategories = () : CategoriesResult =>  {
+type Action =
+  | { type: 'FETCH_START' }
+  | { type: 'FETCH_SUCCESS'; payload: Category[] }
+  | { type: 'FETCH_ERROR'; payload: string };
 
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [error, setError] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(true);
+const initialState: CategoriesResult = {
+  categories: [],
+  error: '',
+  loading: true,
+};
 
-    //query for fetching categories. Return title, slug and bookCount for each category.
-    const categoriesQuery : string = `*[_type == "category"] {
-        title,
-        slug,
-        "bookCount": count(*[_type == 'book' && references(^._id)])
-    }`;
+const reducer = (state: CategoriesResult, action: Action): CategoriesResult => {
+  switch (action.type) {
+    case 'FETCH_START':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, categories: action.payload };
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
-    // fetch categories
+// Custom hook for fetching categories
+const useCategories = (): CategoriesResult => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Query for fetching categories. Return title, slug, and bookCount for each category.
+  const categoriesQuery: string = `*[_type == "category"] {
+    title,
+    slug,
+    "bookCount": count(*[_type == 'book' && references(^._id)])
+  }`;
+
+  useEffect(() => {
     const fetchCategories = async () => {
-        setLoading(true);
-        try {
-            const categoriesResult: Category[] = await client.fetch<Category[]>(categoriesQuery);
-            setCategories(categoriesResult)
-            setLoading(false);
-        } catch (e) {
-            setError("Something went wrong while fetching categories");
-            setLoading(false);
-        }
-    }
+      dispatch({ type: 'FETCH_START' });
+      try {
+        const categoriesResult: Category[] = await client.fetch<Category[]>(categoriesQuery);
+        dispatch({ type: 'FETCH_SUCCESS', payload: categoriesResult });
+      } catch (e) {
+        dispatch({ type: 'FETCH_ERROR', payload: 'Something went wrong while fetching categories' });
+      }
+    };
 
-     // fetch books and categories on page load and when queryItems changes
-     useEffect(() => {
-        fetchCategories();   
-    }, []);
+    fetchCategories();
+  }, []);
 
-    return {categories, error, loading};
-}
+  return state;
+};
 
 export default useCategories;
-
-
-

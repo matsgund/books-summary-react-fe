@@ -5,8 +5,10 @@ import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/shared-components/loading-spinner/LoadingSpinner';
 import useCategories from '../../hooks/useCategories';
 import { QueryItems } from '../../BooksPageInterface';
+import React from 'react';
 
 const Categories = () => {
+   
     const navigate = useNavigate();
     const location = useLocation();
     const refArray = useRef<HTMLInputElement[]>([]);
@@ -15,11 +17,11 @@ const Categories = () => {
 
     // Initialize queryItems from URL
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const initialItems = params.get('categories')?.split(',') || [];
-        setQueryItems({ items: initialItems });
+       const params = new URLSearchParams(location.search);
+       const initialItems = params.get('categories')?.split(',') || [];
+       setQueryItems({ items: initialItems });
 
-        // Also set the checkboxes to checked based on URL
+      //  Also set the checkboxes to checked based on URL
         if (refArray.current) {
             initialItems.forEach((item) => {
                 const checkbox = refArray.current.find((element) => element.id === item);
@@ -31,23 +33,33 @@ const Categories = () => {
     }, [location.search]);
 
     const changeQueryItems = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("changeQueryItems");
         const { value, checked } = e.target;
         const { items } = queryItems;
-
+    
         let newItems;
         if (checked) {
             newItems = [...items, value];
         } else {
             newItems = items.filter((e) => e !== value);
         }
-
+    
         setQueryItems({ items: newItems });
-
-        // Update URL
-        const params = new URLSearchParams();
-        params.append('categories', newItems.join(','));
-        navigate({ search: params.toString() });
+    
+        // Get existing query parameters
+        const params = new URLSearchParams(location.search);
+    
+        // Update the 'categories' query parameter
+        if (newItems.length > 0) {
+            params.set('categories', newItems.join(','));
+        } else {
+            params.delete('categories');
+        }
+    
+        // Update the URL while preserving other query parameters
+        navigate(`${location.pathname}?${params.toString()}`);
     };
+
 
     return (
         <>
@@ -71,4 +83,4 @@ const Categories = () => {
     );
 };
 
-export default Categories;
+export default React.memo(Categories);

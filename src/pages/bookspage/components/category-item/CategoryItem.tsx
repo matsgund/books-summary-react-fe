@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { CategoryItemProps } from "./CategoryItemInterfaces";
+import React from 'react';
 
 const CategoryItem = ({item, changeQueryItems, i, refArray, queryItems} : CategoryItemProps) => {
 
@@ -27,4 +28,4 @@ const CategoryItem = ({item, changeQueryItems, i, refArray, queryItems} : Catego
     )
 }
 
-export default CategoryItem;
+export default React.memo(CategoryItem);

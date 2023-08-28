@@ -1,55 +1,77 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import client from '@/utils/sanityClient';
-import  Book  from '@/interfaces/bookInterface';
+import Book from '@/interfaces/bookInterface';
 
-interface UseBooksResult {
-    books: Book[];
-    booksError: string;
-    loading: boolean;
+interface State {
+  books: Book[];
+  error: string | null;
+  loading: boolean;
 }
 
-const useBooks = () : UseBooksResult => {
+type Action =
+  | { type: 'FETCH_START' }
+  | { type: 'FETCH_SUCCESS'; payload: Book[] }
+  | { type: 'FETCH_ERROR'; payload: string };
 
-    // query for fetching the 3 latest items
-    const [books, setBooks] = useState<Book[]>([]);
-    const [error, setError] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
-    const query: string = `*[_type == "book"] | order(publishedAt desc)[0..2] {
-                title,
-                slug,
-                mainImage{
-                asset->{
-                _id,
-                url
-            }
-        }
-    }`;
+const initialState: State = {
+  books: [],
+  error: null,
+  loading: false,
+};
 
-    // fetch the data
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'FETCH_START':
+      return { ...state, loading: true, error: null };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, books: action.payload };
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const query = `*[_type == "book"] | order(publishedAt desc)[0..2] {
+  title,
+  slug,
+  mainImage{
+    asset->{
+      _id,
+      url
+    }
+  }
+}`;
+
+const useBooks = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const options = { signal: abortController.signal };
+
     const fetchBooks = async () => {
-      setLoading(true);
-        const abortController = new AbortController();
-        const options = { signal: abortController.signal };
-        try {
-          const booksResult: Book[] = await client.fetch(query, options);
-          setBooks(booksResult);
-          setLoading(false);
-        } catch(e) {
-          setError("Unable to load books");
-          setLoading(false);
-        }
-      
-        return () => abortController.abort();
+      dispatch({ type: 'FETCH_START' });
+      try {
+        const booksResult: Book[] = await client.fetch(query, options);
+        dispatch({ type: 'FETCH_SUCCESS', payload: booksResult });
+      } catch (e) {
+        dispatch({ type: 'FETCH_ERROR', payload: 'Unable to load books' });
       }
+    };
 
-    // run the fetch function on mount
-    useEffect(() => {
-        fetchBooks();
-    }, []);
-    
+    fetchBooks();
 
-    // return the data
-    return {books, booksError: error, loading};
-}
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
- export default useBooks;
+  return {
+    books: state.books,
+    booksError: state.error,
+    loading: state.loading,
+  };
+};
+
+export default useBooks;

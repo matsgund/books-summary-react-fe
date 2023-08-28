@@ -1,65 +1,71 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useBooks from '../../hooks/useBooks';
 import BookCard from '@/shared-components/book-card/BookCard';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
-import { useContext, useRef, useCallback, useState } from 'react';
-import { BooksContext } from '../../BooksPage';
-import { BooksContextProps } from './BooksInterface';
-
+import { useEffect, useRef, useCallback, useState } from 'react';
+import React from 'react';
 
 
 const Books = () => {
-
-    const {queryItems, querySearch} = useContext(BooksContext) as BooksContextProps;
-    const [latestBookId, setLatestBookId] = useState<string>("");
-    const {books, booksError} = useBooks({queryItems, querySearch, latestBookId});
    
-    const observer = useRef<IntersectionObserver>();
-    const lastBookElementRef = useCallback((node: any) => {
+    const [latestBookId, setLatestBookId] = useState<string>('');
+    const { books, booksError } = useBooks(latestBookId);
+  
+  const observer = useRef<IntersectionObserver>();
 
-        if(booksError) return;
-        if(observer.current) observer.current.disconnect();
-
-        observer.current = new IntersectionObserver(entries => {
-            if(entries[0].isIntersecting) {
-                setLatestBookId(entries[0].target.id);
-            }    
-        });
-
-        if(node) observer.current.observe(node);
-
-    }, [latestBookId]);
-
-
-    return (
-        <>
-          {!booksError ?
-                    books.map((item, i)=> {              
-                        if(books.length === i +1) {
-                            return (
-                                <Link to={"/books/" + item.slug.current} key={i} ref={lastBookElementRef} id={item._id}>
-                                    <BookCard
-                                        key={i} 
-                                        book={item}
-                                        />
-                                </Link>
-                            )
-                        } else {
-                            return (
-                                <Link to={"/books/" + item.slug.current} key={i}>
-                                    <BookCard
-                                        key={i} 
-                                        book={item}
-                                        />
-                                </Link>
-                            )
-                        }                        
-                    }) :
-                    <ErrorDisplayer error={booksError} />
+  const lastBookElementRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (booksError) return;
+      if (observer.current) observer.current.disconnect();
+  
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          const newLatestBookId = entries[0].target.id;
+          if (newLatestBookId !== latestBookId) {
+            console.log(newLatestBookId);
+            setLatestBookId(newLatestBookId);
+            // Unobserve the current element to prevent multiple triggers
+            if (observer.current) {
+              observer.current.unobserve(entries[0].target);
             }
-        </>
-    );
+          }
+        }
+      });
+  
+      if (node) observer.current.observe(node);
+    },
+    [latestBookId, booksError]  // Add latestBookId and booksError as dependencies
+  );
+  useEffect(() => {
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      {!booksError ? (
+        books.map((item, i) => {
+          const isLastBook = books.length === i + 1;
+          return (
+            <Link
+              to={`/books/${item.slug.current}`}
+              key={item._id}
+              ref={isLastBook ? lastBookElementRef : null}
+              id={item._id}
+            >
+              <BookCard book={item} />
+            </Link>
+          );
+        })
+      ) : (
+        <ErrorDisplayer error={booksError} />
+      )}
+    </>
+  );
 };
 
-export default Books;
 
+export default React.memo(Books);
