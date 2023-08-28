@@ -19,13 +19,13 @@ const NavBar = () => {
         <div className={classes["nav-component"]}>
             <nav>
                 <ul>
-                    <li className={splitLocation[1] === "" ? classes.active : ""}>
+                    <li className={pathname === "/" ? classes.active : ""}>
                         <Link to="/">Home</Link>
                     </li>
-                    <li className={splitLocation[1] === "books" ? classes.active : ""}>
+                    <li className={pathname === "/books" ? classes.active : ""}>
                         <Link to="/books">Books</Link>
                     </li>
-                    <li className={splitLocation[1] === "about" ? classes.active : ""}>
+                    <li className={pathname === "/about" ? classes.active : ""}>
                         <Link to="/about">About</Link>
                     </li>
                 </ul>
