@@ -6,30 +6,36 @@ import Book from '@/interfaces/bookInterface';
 interface State {
   books: Book[];
   error: string;
+  loading: boolean;  // Add loading state
 }
 
 type Action =
   | { type: 'SET_BOOKS'; payload: Book[] }
   | { type: 'APPEND_BOOKS'; payload: Book[] }
-  | { type: 'SET_ERROR'; payload: string };
+  | { type: 'SET_ERROR'; payload: string }
+  | { type: 'SET_LOADING'; payload: boolean };  // Add loading action type
 
 const initialState: State = {
   books: [],
   error: '',
+  loading: false,  // Initialize loading state
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_BOOKS':
-      return { ...state, books: action.payload };
+      return { ...state, books: action.payload, loading: false };
     case 'APPEND_BOOKS':
-      return { ...state, books: [...state.books, ...action.payload] };
+      return { ...state, books: [...state.books, ...action.payload], loading: false };
     case 'SET_ERROR':
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, loading: false };
+    case 'SET_LOADING':  // Handle loading action
+      return { ...state, loading: action.payload };
     default:
       return state;
   }
 };
+
 
 const useBooks = (latestBookId: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -67,6 +73,7 @@ const useBooks = (latestBookId: string) => {
   };
   
   const fetchBooks = async (append: boolean) => {
+    dispatch({ type: 'SET_LOADING', payload: true });  // Set loading to true before fetching
     try {
       const query = booksQueryConstructor(append);
       const booksResult: Book[] = await client.fetch(query);
@@ -88,7 +95,7 @@ const useBooks = (latestBookId: string) => {
       fetchBooks(false);
   } , [location.search]);
 
-  return { books: state.books, booksError: state.error };
+  return { books: state.books, booksError: state.error, loading: state.loading };  
 };
 
 export default useBooks;

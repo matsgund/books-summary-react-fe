@@ -3,13 +3,15 @@ import useBooks from '../../hooks/useBooks';
 import BookCard from '@/shared-components/book-card/BookCard';
 import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
 import { useEffect, useRef, useCallback, useState } from 'react';
+import LoadingSpinner from '@/shared-components/loading-spinner/LoadingSpinner';
+
 import React from 'react';
 
 
 const Books = () => {
    
   const [latestBookId, setLatestBookId] = useState<string>('');
-  const { books, booksError } = useBooks(latestBookId);
+  const { books, booksError, loading } = useBooks(latestBookId);
   const observer = useRef<IntersectionObserver>();
 
   const lastBookElementRef = useCallback((node: any) => {
@@ -29,31 +31,33 @@ const Books = () => {
 
   return (
     <>
-          {!booksError ?
-                    books.map((item, i)=> {              
-                        if(books.length === i +1) {
-                            return (
-                                <Link to={"/books/" + item.slug.current} key={i} ref={lastBookElementRef} id={item._id}>
-                                    <BookCard
-                                        key={i} 
-                                        book={item}
-                                        />
-                                </Link>
-                            )
-                        } else {
-                            return (
-                                <Link to={"/books/" + item.slug.current} key={i}>
-                                    <BookCard
-                                        key={i} 
-                                        book={item}
-                                        />
-                                </Link>
-                            )
-                        }                        
-                    }) :
-                    <ErrorDisplayer error={booksError} />
-            }
-        </>
+     
+      {booksError && <ErrorDisplayer error="Unable to load books"/>}
+      {!booksError && books.length > 0 && 
+          books.map((item, i)=> {              
+              if(books.length === i +1) {
+                  return (
+                      <Link to={"/books/" + item.slug.current} key={i} ref={lastBookElementRef} id={item._id}>
+                          <BookCard
+                              key={i} 
+                              book={item}
+                              />
+                      </Link>
+                  )
+              } else {
+                  return (
+                      <Link to={"/books/" + item.slug.current} key={i}>
+                          <BookCard
+                              key={i} 
+                              book={item}
+                              />
+                      </Link>
+                  )
+              }                        
+          })
+        }
+        {loading && !booksError && <LoadingSpinner isVisible={loading}/>}
+    </>
   );
 };
 

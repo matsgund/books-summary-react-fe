@@ -7,8 +7,6 @@ import classes from './homePageBooks.module.css';
 import image from '@/assets/images/Emne5.png';
 
 const HomePageBooks = () => {
-   
-    
     const { books, booksError, loading } = useBooks();
    
     return (
