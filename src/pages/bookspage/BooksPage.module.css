@@ -13,15 +13,6 @@
 
   .books-main {
     grid-area: main;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
-    gap: 1rem;
-    padding-bottom: 2rem; 
-  }
-
-  .books-main a {
-    display: grid;
-    align-items: stretch;
   }
 
   .books-aside-left {
@@ -73,13 +64,6 @@
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-}
-
-@media screen and (min-width: 768px) {
-  .books-main {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-    gap: 2rem;
-  }
 }
 
 @media screen and (min-width: 1200px) {
