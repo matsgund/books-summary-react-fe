@@ -1,8 +1,8 @@
-import useBooks from '../../hooks/useBooks';
+import useBooks from '../../../../hooks/useBooksHomepage';
 import { Link } from 'react-router-dom';
-import BookCard from '@/shared-components/book-card/BookCard';
-import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
-import LoadingSpinner from '@/shared-components/loading-spinner/LoadingSpinner';
+import BookCard from '@/components/book-card/BookCard';
+import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
+import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
 import classes from './homePageBooks.module.css';
 import image from '@/assets/images/Emne5.png';
 

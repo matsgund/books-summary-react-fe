@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CategoryItem from '../category-item/CategoryItem';
-import ErrorDisplayer from '@/shared-components/error-displayer/ErrorDisplayer';
-import LoadingSpinner from '@/shared-components/loading-spinner/LoadingSpinner';
-import useCategories from '../../hooks/useCategories';
+import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
+import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
+import useCategories from '../../../../hooks/useCategories';
 import { QueryItems } from '../../BooksPageInterface';
 import React from 'react';
 

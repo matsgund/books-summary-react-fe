@@ -3,8 +3,8 @@ import HomePage from '@/pages/homepage/HomePage';
 import BooksPage from '@/pages/bookspage/BooksPage';
 import BookPage from '@/pages/bookpage/BookPage';
 import AboutPage from '@/pages/aboutpage/AboutPage';
-import Header from '@/shared-components/header/Header';
-import Footer from '@/shared-components/footer/Footer';
+import Header from '@/components/header/Header';
+import Footer from '@/components/footer/Footer';
 import {BrowserRouter,Routes, Route} from "react-router-dom";
 import ReactGA from 'react-ga4';
 
