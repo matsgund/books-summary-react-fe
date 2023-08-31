@@ -1,0 +1,18 @@
+.books-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+    gap: 1rem;
+    padding-bottom: 2rem; 
+  }
+
+  .books-main a {
+    display: grid;
+    align-items: stretch;
+  }
+
+  @media screen and (min-width: 768px) {
+    .books-main {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+      gap: 2rem;
+    }
+  }
