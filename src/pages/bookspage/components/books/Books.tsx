@@ -1,19 +1,19 @@
 import { Link} from 'react-router-dom';
-import useBooks from '../../../../hooks/useBooks';
+import useBooks from '@/hooks/useBooks';
 import BookCard from '@/components/book-card/BookCard';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
-import {useState } from 'react';
 import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import classes from './Books.module.css';
+import { useLatestBook } from '@/context/LatestBookIdContext';
 
 import React from 'react';
 
 
 const Books = () => {
    
-  const [latestBookId, setLatestBookId] = useState<string>('');
-  const { books, booksError, loading, totalPages, currentPage, totalDocuments } = useBooks(latestBookId);
+  const {setLatestBookId } = useLatestBook(); 
+  const { books, booksError, loading, totalPages, currentPage, totalDocuments } = useBooks();
 
   return (
     <>

@@ -7,6 +7,8 @@ import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import {BrowserRouter,Routes, Route} from "react-router-dom";
 import ReactGA from 'react-ga4';
+import { LatestBookProvider } from './context/LatestBookIdContext';
+import { BooksProvider } from './context/BooksContext';
 
 // Initialize Google Analytics
 const Analytics_ID = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
@@ -14,20 +16,25 @@ ReactGA.initialize(Analytics_ID);
 
 function App() {
   return (
-    <BrowserRouter>       
-      <div id="page-body">
-          <Header/>
-          <div id="page-main-content">
-            <Routes>
-                <Route path="/" element={<HomePage/>}/>
-                <Route path="/about" element={<AboutPage/>}/>
-                <Route path="/books" element={<BooksPage/>}/>
-                <Route path="/books/:slug" element={<BookPage/>}/>
-            </Routes>
+    <BooksProvider>
+      <LatestBookProvider>
+        <BrowserRouter>       
+          <div id="page-body">
+              <Header/>
+              <div id="page-main-content">
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/about" element={<AboutPage/>}/>
+                    <Route path="/books" element={<BooksPage/>}/>
+                    <Route path="/books/:slug" element={<BookPage/>}/>
+                </Routes>
+              </div>
+              <Footer/>   
           </div>
-          <Footer/>   
-      </div>
-  </BrowserRouter>
+      </BrowserRouter>
+    </LatestBookProvider>
+  </BooksProvider>
+
   );
 }
 

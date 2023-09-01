@@ -2,6 +2,8 @@ import { useReducer, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import client from '@/utils/sanityClient';
 import Book from '@/interfaces/bookInterface';
+import { useLatestBook } from '@/context/LatestBookIdContext';
+import { useBooksContext } from '@/context/BooksContext';
 
 interface State {
   books: Book[];
@@ -51,15 +53,20 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const useBooks = (latestBookId: string) => {
+const useBooks = () => {
+
+
+  const { books, setBooks } = useBooksContext();
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation();
-  const bookLimit = 30;
+  const { latestBookId, prevLatestBookId, setPrevLatestBookId  } = useLatestBook(); 
+  const bookLimit = 10;
   
   const booksQueryConstructor = (append: boolean): string => {
     const params = new URLSearchParams(location.search);
     const queryItems = params.get('categories')?.split(',') || [];
     const querySearch = params.get('search') || '';
+    setPrevLatestBookId(latestBookId);
   
     const booksQuery: string = `{
       "books": *[_type == "book" 
@@ -97,10 +104,11 @@ const useBooks = (latestBookId: string) => {
       const totalDocuments: number = result.totalDocuments;
       const totalPages = Math.ceil(totalDocuments / bookLimit);
   
+      // Set global books state
       if (append) {
-        dispatch({ type: 'APPEND_BOOKS', payload: booksResult });
+        setBooks([...books, ...booksResult]);
       } else {
-        dispatch({ type: 'SET_BOOKS', payload: booksResult });
+        setBooks(booksResult);
       }
   
       dispatch({ type: 'SET_TOTAL_DOCUMENTS', payload: totalDocuments });
@@ -111,19 +119,41 @@ const useBooks = (latestBookId: string) => {
   
     } catch (e) {
       dispatch({ type: 'SET_ERROR', payload: 'Something went wrong while fetching books' });
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
   
+
+  // TODO make the whole hook global. 
+  // then we can check of the user has been on the last page and stop fetching
   useEffect(() => {
-    fetchBooks(true);
+      // check previous latestBookId state
+      // if (latestBookId.length > 0 && books.length > 0) {
+      //   if (!prevLatestBookIds.includes(latestBookId)) {
+      //     fetchBooks(true);
+      //   }
+      // }
+      console.log(latestBookId)
+      console.log(prevLatestBookId)
+      if (latestBookId.length > 0 && books.length > 0 && latestBookId !== prevLatestBookId) 
+        {
+          fetchBooks(true);
+        }
   }, [latestBookId]);
 
   useEffect(() => {
-    fetchBooks(false);
+    
+    if (books.length === 0 || location.search !== '') {
+      console.log(location.search)
+    console.log("clean fetchBooks")
+    console.log(books);
+      fetchBooks(false);
+    }
   }, [location.search]);
 
   return { 
-    books: state.books, 
+    books: books, 
     booksError: state.error, 
     loading: state.loading,
     totalDocuments: state.totalDocuments,
