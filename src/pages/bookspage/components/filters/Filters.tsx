@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FilterItem from '../filter-item/FilterItem';
+import { useBooksContext } from '@/context/BooksContext';
+
 
 interface QueryItems {
     items: string[];
@@ -11,6 +13,7 @@ const Filters = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [queryItems, setQueryItems] = useState<QueryItems>({ items: [] });
+    const { state, dispatch } = useBooksContext();
 
     // Update queryItems based on URL
     useEffect(() => {
@@ -36,6 +39,8 @@ const Filters = () => {
         const params = new URLSearchParams();
         if (newItems.length > 0) {
             params.append('categories', newItems.join(','));
+        } else {
+            dispatch({ type: 'CLEAR_BOOKS' });  // set books to initial state
         }
         navigate({ search: params.toString() });
     };
@@ -43,6 +48,7 @@ const Filters = () => {
     const clearQueryItems = () => {
         setQueryItems({ items: [] });
         navigate({ search: '' }); // Clear the URL query parameters
+        dispatch({ type: 'CLEAR_BOOKS' });  // set books to initial state
     };
 
     return (
