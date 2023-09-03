@@ -79,6 +79,9 @@ const useBooks = () => {
   // only fetch books when we already has some books in the state
   // and the latestBookId is not the same as the previous one
   useEffect(() => {
+    console.log('useEffect latestBookId');
+    console.log(latestBookId);
+    console.log(prevLatestBookId);
     if (latestBookId.length > 0 && state.books.length > 0 && latestBookId !== prevLatestBookId) {
           fetchBooks(true);
         }

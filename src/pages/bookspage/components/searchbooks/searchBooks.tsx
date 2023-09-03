@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./searchBooks.module.css";
 import { BsSearch } from "react-icons/bs";
+import { useBooksContext } from "@/context/BooksContext";
+import { useLatestBook } from "@/context/LatestBookIdContext";
 
 const SearchBooks = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [querySearch, setQuerySearch] = useState<string>("");
     const [queryFilter, setQueryFilter] = useState<string>("");
+    const { state, dispatch } = useBooksContext();
+    const { setLatestBookId  } = useLatestBook(); 
+    
 
     useEffect(() => {
-        // Get the search query from the URL
         const params = new URLSearchParams(location.search);
         const searchQuery = params.get('search');
         if (searchQuery) {
@@ -19,19 +23,23 @@ const SearchBooks = () => {
         }
     }, [location.search]);
 
-    // Function that handles the submit of the search form
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
         const searchInput = (e.target as HTMLFormElement).elements.namedItem("search") as HTMLInputElement;
         setQuerySearch(searchInput.value);
 
-        // Get existing query parameters
         const params = new URLSearchParams(location.search);
 
-        // Update the 'search' query parameter
-        params.set('search', searchInput.value);
+        if (searchInput.value === '') {
+            // Remove 'search' query parameter if the search input is empty
+            // clear books state 
+            setLatestBookId('');
+            dispatch({ type: 'CLEAR_BOOKS' });
+            params.delete('search');
+        } else {
+            params.set('search', searchInput.value);
+        }
 
-        // Update the URL while preserving other query parameters
         navigate(`${location.pathname}?${params.toString()}`);
     };
 

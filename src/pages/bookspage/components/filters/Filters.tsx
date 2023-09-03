@@ -8,7 +8,6 @@ interface QueryItems {
     items: string[];
   }
   
-
 const Filters = () => {
     const location = useLocation();
     const navigate = useNavigate();
