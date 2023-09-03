@@ -1,7 +1,11 @@
 import classes from './FilterItem.module.css';
 import { ImCross } from 'react-icons/im';
 import { ChangeEvent } from 'react';
-import { FilterItemProps } from './FilterItemInterface';
+
+interface FilterItemProps {
+  item: string;
+  func: (event: ChangeEvent<HTMLInputElement>) => void;
+}
 
 const FilterItem = ({ item, func }: FilterItemProps) => {
   return (

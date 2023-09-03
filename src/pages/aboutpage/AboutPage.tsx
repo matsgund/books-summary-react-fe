@@ -1,5 +1,5 @@
 import classes from './AboutPage.module.css';
-import image from '@/assets/images/book2.png';
+import image from '@/assets/images/background-about-page.png';
 
 const AboutPage = () => {
   return (

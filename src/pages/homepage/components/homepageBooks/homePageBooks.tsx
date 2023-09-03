@@ -4,7 +4,7 @@ import BookCard from '@/components/book-card/BookCard';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
 import classes from './homePageBooks.module.css';
-import image from '@/assets/images/Emne5.png';
+import image from '@/assets/images/girl-image-home-page.png';
 
 const HomePageBooks = () => {
     const { books, booksError, loading } = useBooks();
