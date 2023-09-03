@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import classes from "./searchBooks.module.css";
+import classes from "./SearchBooks.module.css";
 import { BsSearch } from "react-icons/bs";
 import { useBooksContext } from "@/context/BooksContext";
 import { useLatestBook } from "@/context/LatestBookIdContext";
