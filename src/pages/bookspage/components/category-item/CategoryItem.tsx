@@ -1,6 +1,19 @@
 import { useEffect } from 'react';
-import { CategoryItemProps } from "./CategoryItemInterfaces";
 import React from 'react';
+
+interface CategoryItemProps {
+    item: {
+        title: string;
+        slug: {
+            current: string;
+        }
+        bookCount: number;
+    };
+    changeQueryItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    i: number;
+    refArray: React.MutableRefObject<HTMLInputElement[]>;
+    queryItems: string[];
+}
 
 const CategoryItem = ({item, changeQueryItems, i, refArray, queryItems} : CategoryItemProps) => {
 
