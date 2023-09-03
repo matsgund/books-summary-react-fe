@@ -3,7 +3,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import HomePageBooks from './homePageBooks';
 import Book from '@/interfaces/bookInterface';
 import {booksData} from '@/data/books.data';
-import useBooks from '../../../../hooks/useBooksHomepage';
+import useBooks from '@/hooks/useBooksHomepage';
 import { MemoryRouter } from 'react-router-dom';
 
 interface UseBooksResult {
@@ -13,7 +13,7 @@ interface UseBooksResult {
 }
 
 // mock some different results from the useBooks hook
- vi.mock('../../hooks/useBooks');
+ vi.mock('@/hooks/useBooksHomepage');
  //@ts-ignore
  const mockUseBooks = useBooks as vi.mock<UseBooksResult>;
  const mockUseBooksResultsSuccessfuly = {books: booksData, booksError: "", loading: false};

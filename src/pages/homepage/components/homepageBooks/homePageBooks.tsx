@@ -1,4 +1,4 @@
-import useBooks from '../../../../hooks/useBooksHomepage';
+import useBooks from '@/hooks/useBooksHomepage';
 import { Link } from 'react-router-dom';
 import BookCard from '@/components/book-card/BookCard';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
