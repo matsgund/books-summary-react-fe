@@ -87,7 +87,7 @@
   @media screen and (min-width: 2400px) {
     .home-grid-container {
       grid-template-areas:
-      ". . aside aside aside main main ."
+      ". . . main main ."
     }
   }
 
