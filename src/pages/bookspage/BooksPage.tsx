@@ -1,6 +1,6 @@
 import classes from './BooksPage.module.css';
-import SearchBooks from './components/searchbooks/searchBooks';
-import Categories from './components/categories/categories';
+import SearchBooks from './components/searchbooks/SearchBooks';
+import Categories from './components/categories/Categories';
 import Filters from './components/filters/Filters';
 import Books from './components/books/Books';
 

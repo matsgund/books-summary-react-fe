@@ -3,8 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CategoryItem from '../category-item/CategoryItem';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
-import useCategories from '../../../../hooks/useCategories';
+import useCategories from '@/hooks/useCategories';
+import classes from './Categories.module.css';
 import React from 'react';
+import { MdOutlineExpandMore, MdOutlineExpandLess } from 'react-icons/md';
 
 interface QueryItems {
     items: string[];
@@ -17,7 +19,22 @@ const Categories = () => {
     const refArray = useRef<HTMLInputElement[]>([]);
     const [queryItems, setQueryItems] = useState<QueryItems>({ items: [] });
     const { categories, error, loading } = useCategories();
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isSmallDevice, setIsSmallDevice] = useState(window.innerWidth <= 1200);
 
+
+    // tracks the window size. To be used to determine whether to show the categories or not
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSmallDevice(window.innerWidth <= 1200);
+        };
+        window.addEventListener("resize", handleResize);
+    
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
     // Initialize queryItems from URL
     useEffect(() => {
        const params = new URLSearchParams(location.search);
@@ -36,7 +53,6 @@ const Categories = () => {
     }, [location.search]);
 
     const changeQueryItems = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("changeQueryItems");
         const { value, checked } = e.target;
         const { items } = queryItems;
     
@@ -62,12 +78,24 @@ const Categories = () => {
         // Update the URL while preserving other query parameters
         navigate(`${location.pathname}?${params.toString()}`);
     };
-
+    
 
     return (
-        <>
-            <h3>Categories</h3>
-            <ul>
+        <>  
+            <div className={classes["categories-heading-container"]}>
+                <h3>Categories</h3>
+                <div className={"categories-expand-container"} onClick={() => setIsExpanded(!isExpanded)}>
+                { isSmallDevice && (
+                    <div className={"categories-expand-container"} onClick={() => setIsExpanded(!isExpanded)}>
+                        { isExpanded 
+                            ? <MdOutlineExpandLess className={classes["expand-icon"]} /> 
+                            : <MdOutlineExpandMore className={classes["expand-icon"]} />
+                        }
+                    </div>
+                )}
+                </div>
+            </div>
+            { (isExpanded || !isSmallDevice) && ( <ul>
                 {error && <ErrorDisplayer error="Unable to load categories" />}
                 {loading && !error && <LoadingSpinner isVisible={loading} />}
                 {!error &&
@@ -81,7 +109,7 @@ const Categories = () => {
                             queryItems={queryItems.items}
                         />
                     ))}
-            </ul>
+            </ul> )}
         </>
     );
 };
