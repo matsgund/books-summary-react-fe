@@ -25,7 +25,7 @@ const Books = () => {
             next={()=> setLatestBookId(books[books.length - 1]._id)}
             hasMore={currentPage < totalPages}
             loader={<LoadingSpinner isVisible={loading}/>}
-            endMessage={<p style={{textAlign: 'center'}}>You have seen all {totalDocuments}</p>}>
+            endMessage={<p style={{textAlign: 'center'}}>You have seen all {totalDocuments} books!</p>}>
               
             {books.map((item, i)=> (
                   <Link to={"/books/" + item.slug.current} key={i} id={item._id}>

@@ -11,7 +11,7 @@ const useBooks = () => {
   const { state, dispatch } = useBooksContext();
   const location = useLocation();
   const { latestBookId, prevLatestBookId, setPrevLatestBookId  } = useLatestBook(); 
-  const bookLimit = 10;
+  const bookLimit = 25;
   
   const booksQueryConstructor = (append: boolean): string => {
     const params = new URLSearchParams(location.search);
