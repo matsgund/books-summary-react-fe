@@ -4,8 +4,11 @@ import CategoryItem from '../category-item/CategoryItem';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
 import useCategories from '../../../../hooks/useCategories';
-import { QueryItems } from '../../BooksPageInterface';
 import React from 'react';
+
+interface QueryItems {
+    items: string[];
+    }
 
 const Categories = () => {
    
