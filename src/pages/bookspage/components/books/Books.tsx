@@ -4,7 +4,7 @@ import BookCard from '@/components/book-card/BookCard';
 import ErrorDisplayer from '@/components/error-displayer/ErrorDisplayer';
 import LoadingSpinner from '@/components/loading-spinner/LoadingSpinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import classes from './Books.module.css';
+import classes from './books.module.css';
 import { useLatestBook } from '@/context/LatestBookIdContext';
 
 import React from 'react';
