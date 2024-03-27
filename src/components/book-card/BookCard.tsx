@@ -12,7 +12,7 @@ const BookCard = ({book}: props) => {
     return (
         <div className={classes["book-card-container"]}>
             <div className={classes["book-card"]}>
-                <img src={book.mainImage.asset.url} alt="book image"/>
+                <img src={book?.mainImage?.asset?.url} alt="book image"/>
             </div>
         </div>
     )
